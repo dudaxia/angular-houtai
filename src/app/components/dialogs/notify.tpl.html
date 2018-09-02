@@ -1,0 +1,13 @@
+<div class="modal-header dialog-header-notify" ng-if="header">
+    <button type="button" class="close" ng-click="close()" class="pull-right">&times;</button>
+    <h4 class="modal-title">{{header}}</h4>
+</div>
+<div class="modal-body" >
+	 <div ng-if="!header">
+        <button type="button" class="close" ng-click="close()" ng-style="{'margin-top':'-10px'}">&times;</button>
+    </div> 
+    <div class="xbody" ng-bind-html="msg"></div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="close()">{{"DIALOGS_OK" | translate}}</button>
+</div>

@@ -1,0 +1,68 @@
+<form class="form-horizontal" form-validator formvalidatorconfig="eventformvalidate" method="post">  
+  <section class="vbox">
+    <header class="header bg-white b-b clearfix">
+        <div class="row m-t m-l-xs">新增站址</div>
+    </header>
+    <!-- <div class="section scrollable wrapper w-f m-b-md"> -->
+    <div class="section wrapper w-f m-b-md">
+      <div class="bg-white wrapper-sm">
+      <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must">地址</label>
+            <div class="col-sm-4">
+                <select class="input-sm m-r-sm mySel fl" name="fff" ng-options="item.value as item.name for item in zhanAddressData" ng-model="entity.zhanAddress" ng-change="search()"></select>
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must">铁塔站址名称</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="name" data-rule-required="true" data-rule-maxlength="15" ng-model="entity.name" placeholder="请输铁塔站址名称">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must">站址编码</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="code" data-rule-required="true" data-rule-maxlength="15" ng-model="entity.code" placeholder="请输入站址编码">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must">场景划分</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="changjing" data-rule-required="true" data-rule-maxlength="15" ng-model="entity.changjing" placeholder="请输入场景划分">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must">经度</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="lng" data-rule-required="true" data-rule-maxlength="15" ng-model="entity.lng" placeholder="请输入经度">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must">纬度</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="lat" data-rule-required="true" data-rule-maxlength="15" ng-model="entity.lat" placeholder="请输入纬度">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must">详细地址</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="detailaddress" data-rule-required="true" data-rule-maxlength="15" ng-model="entity.detailaddress" placeholder="请输入详细地址">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must">产品配置</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="peizhi" data-rule-required="true" data-rule-maxlength="15" ng-model="entity.peizhi" placeholder="请输入产品配置">
+            </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer bg-white" fix-footer-ex="" fix-con-selector=".main-content" style="left: 200px;padding:2px 240px 0 10px;">
+      <div class="row text-center-xs">
+        <div class="modal-footer">
+          <button class="btn btn-success" btn-loading="saveloading" loading-text="保存中..." type="submit">保存</button>
+          <a class="btn btn-default" type="button" ui-sref="app.basisite.maintain">取消</a>
+        </div>
+      </div>
+    </footer>
+  </section>
+</form>

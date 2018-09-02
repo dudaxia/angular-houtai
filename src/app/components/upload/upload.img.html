@@ -1,0 +1,25 @@
+<style>
+.h-150{height: 150px;}
+</style>
+<div class="uploadify-queue ">
+    <div id="upload{{$index}}" class="uploadify-queue-item" ng-repeat="f in files">
+        <div ng-if="f.fileProgress<100">
+            <p class="m-r-xs inline">{{f.name}}</p><span class="m-r-xs">({{f.size|formatBytes}})</span><span class="m-r-xs">{{f.fileProgress}}%</span>
+            <div class="uploadify-progress">
+                <div class="uploadify-progress-bar" style="width: {{f.fileProgress}}%;"> </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ul class="list-unstyled list-inline m-t upload-list " style="max-width:550px;">
+    <li ng-click="selectIndexFun($index)" ng-class="{'index':$index==selectIndex,'pull-left':haslink,'h-150':haslink}" ng-repeat="f in fileList" class="m-b-sm">
+        <a href="javascript:;" class="close" ng-click="del($index)" ng-show="!hide"><i class="fa fa-times-circle"></i></a>
+        <fresco-img-list  list="f.urls"></fresco-img-list>
+        <!-- 如果要添加图片链接的话 -->
+        <input ng-if="haslink" type="text" class="form-control" data-rule-url="true" name="link{{$index}}" ng-model="f.link" ng-disabled="hide" placeholder="添加链接" style="width:120px;margin-top:10px" />
+    </li>
+    <li class="add" ng-show="maxCount>fileList.length && !hide" ng-file-select ng-model="files" class="drop-box" drag-over-class="dragover" ng-multiple="true" allow-dir="true" accept="'image/png,image/jpeg,image/bmp'">
+        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i>上传图片</button>
+    </li>
+</ul>
+<div class="help-block">{{tips}}</div>

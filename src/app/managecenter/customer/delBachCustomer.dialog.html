@@ -1,0 +1,19 @@
+<form form-validator  formvalidatorconfig="eventformvalidate" method="post" class="form-horizontal">
+  <style>
+    .modal-body {
+      padding: 20px 30px;
+    }
+  </style>
+
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" class="pull-right">&times;</button>
+    <h4 class="modal-title">批量删除用户</h4>
+  </div>
+  <div class="modal-body">
+    确定删除此批用户？
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" type="submit" btn-loading="saveloading" loading-text="保存中...">确定删除</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">取消</button>
+  </div>
+</form>

@@ -1,0 +1,32 @@
+{
+  "name": "paste.js",
+  "version": "0.0.9",
+  "authors": [
+    "Michael Yin <layerssss@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "paste.coffee",
+    "Makefile",
+    "index.html"
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "homepage": "https://github.com/Puffant/paste.js",
+  "_release": "0.0.9",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.9",
+    "commit": "18ef507e29d2264d407021624bee6c01ec1510fe"
+  },
+  "_source": "git://github.com/Puffant/paste.js.git",
+  "_target": "~0.0.9",
+  "_originalSource": "paste.js",
+  "_direct": true
+}

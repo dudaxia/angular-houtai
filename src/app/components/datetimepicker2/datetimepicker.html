@@ -1,0 +1,10 @@
+<div class="dropdown" dropdown is-open="dropdownStatusOpen">
+    <a class="dropdown-toggle datetimepickerdropdown" dropdown-toggle href="javascript:;">
+        <div class="input-group">
+            <input type="text" class="form-control" readonly="readonly" ng-attr-data-rule-required="{{required?'true':'false'}}" data-ng-model="date" date-format><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        </div>
+    </a>
+    <ul class="dropdown-menu">
+        <datetimepicker data-ng-model="date" is-open="dropdownStatusOpen" />
+    </ul>
+</div>

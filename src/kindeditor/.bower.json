@@ -1,0 +1,8 @@
+{
+  "name": "kindeditor",
+  "version": "4.1.10",
+  "main": "./kindeditor-all.js",
+  "dependencies": {
+    "angular": "1.2.26"
+  }
+}

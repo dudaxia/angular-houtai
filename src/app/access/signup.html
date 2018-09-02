@@ -1,0 +1,42 @@
+  <section id="content" class="m-t-lg wrapper-md animated fadeInDown">
+    <div class="container aside-xxl">
+      <a class="navbar-brand block" href="index.html">Notebook</a>
+      <section class="panel panel-default m-t-lg bg-white">
+        <header class="panel-heading text-center">
+          <strong>Sign up</strong>
+        </header>
+        <form class="panel-body wrapper-lg" ng-submit="signup()">
+          <div class="form-group">
+            <label class="control-label">邮箱</label>
+            <input type="email" class="form-control input-lg" ng-model="entity.email">
+          </div>
+          <div class="form-group">
+            <label class="control-label">密码</label>
+            <input type="password" class="form-control input-lg" ng-model="entity.password">
+          </div>
+            <div class="form-group">
+            <label class="control-label">确认密码</label>
+            <input type="password" class="form-control input-lg" ng-model="entity.confirmPassword">
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" checked="checked">我已阅读并接受 <a href="javascript:;">《微盟用户协议》</a>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary" btn-loading="signuploading" loading-text="注册中...">Sign up</button>
+          <div class="line line-dashed"></div>
+          <p class="text-muted text-center"><small>Already have an account?</small></p>
+          <a href="javasrcript:;" ui-sref="access.signin"  class="btn btn-default btn-block">Sign in</a>
+        </form>
+      </section>
+    </div>
+  </section>
+  <!-- footer -->
+  <footer id="footer">
+    <div class="text-center padder clearfix">
+      <p>
+        <small>Web app framework base on Bootstrap<br>&copy; 2014</small>
+      </p>
+    </div>
+  </footer>
+  <!-- / footer -->

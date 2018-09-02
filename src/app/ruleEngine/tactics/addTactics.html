@@ -1,0 +1,174 @@
+<!--基础设置-->
+<style>
+  .clearfix:after{
+    content: "";
+    height: 0;
+    overflow: hidden;
+    clear: both;
+  }
+  .slider{
+    margin-top: 20px;
+  }
+  .slider ul li{
+    position: relative;
+    width: 70px;
+    height:23px;
+    float: left;
+    list-style-type:none;
+  }
+  .yuan{
+    border-radius: 100%;
+    width: 20px;
+    height:20px;
+    border:3px #00a2d4 solid;
+    position: absolute;
+    top:0;
+  }
+  .number{
+    position: absolute;
+    left: 20px;
+    top: -20px;
+    color:#b6b6b6;
+  }
+  .xian{
+    position: absolute;
+    width: 50px;
+    height:2px;
+    background: #b6b6b6;
+    left: 20px;
+    top:50%;
+    transform: translate(0,-50%);
+  }
+  .clearfix_padd{
+    padding: 0;
+  }
+  .rank_text{
+    margin-left: 30px;
+  }
+  .rank_text input{
+    width: 35px;
+    margin-left: 35px;
+  }
+  .btn-primary{
+    margin-left: 33%;
+  }
+
+  .hd-title {
+    font-size: 16px;
+    line-height: 30px;
+    border-bottom: 1px solid #e4e4e4;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+  }
+  .modal-body {
+    padding: 20px 30px;
+  }
+  .red{
+    color: #FF0000;
+  }
+  .modal-footer{
+    text-align: center;
+  }
+</style>
+<section class="vbox">
+  <header class="header bg-white b-b clearfix">
+    <button type="button" class="btn btn-primary">基础设置</button>
+    <button type="button" ui-sref="app.management.policy.addRule({applicationCode:vm.applicationCode,eventCode:vm.eventCode,desc:vm.desc,identificationCode:vm.identificationCode,name:vm.name,riskTypeCode:vm.riskTypeCode,patternCode:vm.patternCode,riskThresholdList:vm.thresholds,id:vm.id})" class="btn btn-default">规则管理</button>
+  </header>
+  <div class="section scrollable wrapper w-f">
+    <div class="panel-body" >
+
+      <form form-validator  formvalidatorconfig="listEdit" method="post" class="form-horizontal">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="col-sm-2 control-label must">策略名称 ：</label>
+            <div class="col-sm-4">
+              <input name="name" class="form-control input-sm" ng-model="vm.name" data-rule-required="true" data-rule-maxlength='30'/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label must">应用：</label>
+            <div class="col-sm-4">
+              <select ng-model="vm.applicationCode" disabled="disabled" ng-options="s.code as s.value for s in applicationList" class="form-control w300">
+                <option value="">请选择</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label must">事件类型：</label>
+            <div class="col-sm-4">
+              <select ng-model="vm.eventCode" disabled="disabled" ng-options="s.code as s.value for s in eventList" class="form-control w300" ng-change="riskLevel(vm.eventCode,vm.patternCode)">
+                <option value="">请选择</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label must">风险类型：</label>
+            <div class="col-sm-4">
+              <select ng-model="vm.riskTypeCode" ng-options="s.code as s.value for s in riskTypeList" class="form-control w300">
+                <option value="">请选择</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label must">策略模式：</label>
+            <div class="col-sm-4">
+              <select ng-model="vm.patternCode" ng-options="s.code as s.value for s in patternList" class="form-control w300" ng-change="riskLevel(vm.eventCode,vm.patternCode)">
+                <option value="">请选择</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label must">风险级别及阀值 ：</label>
+            <div class="col-sm-8">
+              <div class="slider">
+                <ul class="clearfix clearfix_padd">
+                  <li ng-repeat="item in maxLevel track by $index">
+                    <div class="yuan"></div>
+                    <div class="xian">
+                      <span class="number">{{$index}}</span>
+                    </div>
+                  </li>
+                  <li ng-if="maxLevel">
+                    <div class="yuan"></div>
+                  </li>
+                </ul>
+                <div class="rank_text">
+                  <input type="text" ng-model="item" name="thresholds[{{$index}}]" ng-repeat="item in vm.thresholds track by $index" required ng-change="changeThresholds(item,$index)">
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-8">
+              <p class="red">* （风险级别依次表示风险增大）</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">标志码：</label>
+            <div class="col-sm-4">
+              <input class="form-control" ng-model="vm.identificationCode" data-rule-Lettersnumbers="true" placeholder="同应用同事件类型下唯一标识" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">描述：</label>
+            <div class="col-sm-4">
+              <textarea class="form-control" rows="3" ng-model="vm.desc" data-rule-maxlength="100" placeholder="最多100字"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-success" btn-loading="saveloading" loading-text="保存中..." type="submit">保存</button>
+          <button class="btn btn-default" type="button" ui-sref="app.management.policy">取消</button>
+          <!--app.policy.management-->
+        </div>
+      </form>
+
+    </div>
+  </div>
+</section>

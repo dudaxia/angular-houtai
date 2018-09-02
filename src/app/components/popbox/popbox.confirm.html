@@ -1,0 +1,10 @@
+<a class="close m-r-xs m-t-xs" ng-click="$hide()">&times;</a>
+<h3 class="popover-title">{{popupTitle||'删除'}}</h3>
+<div class="popover-content" style="padding:10px;">
+  <!-- <div style=" min-width: {{popupMinWidth||'100'}}px; " ng-bind-html="popupBody||'确定删除此条'"></div> -->
+    <p style=" min-width: {{popupMinWidth||'100'}}px; "><b>{{popupBody||'确定删除此条'}}</b></p> 
+    <div class="clearfix" style="min-width:200px;">
+    	<a ng-click="$hide()" class="btn btn-default btn-sm pull-right" style="margin-left: 15px;">{{popupClearButton||'取消'}}</a>
+    	<a ng-click="popupConfirmCallback();$hide()" class="btn btn-danger btn-sm pull-right">{{popupConfirmButton||'确定删除'}}</a>
+    </div>
+</div>

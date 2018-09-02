@@ -1,0 +1,199 @@
+<style>
+  .nav.nav-sub>li.active{
+    background-color: #f2f2f2;
+  }
+</style>
+<!-- list -->
+<ul class="nav">
+  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+  </li>
+  <li ng-class="{active:$state.includes('app.organization')}">
+    <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+             </span>
+      <i class="fa fa-tasks icon"></i>
+      <span>组织机构</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li ui-sref-active="active">
+        <a ui-sref="app.organization.company" ui-sref-opts="{reload:true}">
+          <span>公司管理</span>
+        </a>
+      </li>
+      <!-- <li ui-sref-active="active">
+        <a ui-sref="app.organization.department" ui-sref-opts="{reload:true}">
+          <span>部门管理</span>
+        </a>
+      </li> -->
+      <li ui-sref-active="active">
+        <a ui-sref="app.organization.stations" ui-sref-opts="{reload:true}">
+          <span>岗位管理</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.organization.users" ui-sref-opts="{reload:true}">
+          <span>用户管理</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li ng-class="{active:$state.includes('app.basisite')}">
+    <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+             </span>
+      <i class="fa fa-tasks icon"></i>
+      <span>基站信息</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li ui-sref-active="active">
+        <a ui-sref="app.basisite.maintain" ui-sref-opts="{reload:true}">
+          <span>基站维护</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.basisite.maintain" ui-sref-opts="{reload:true}">
+          <span>产品维护</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li ng-class="{active:$state.includes('app.process')}">
+    <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+             </span>
+      <i class="fa fa-tasks icon"></i>
+      <span>流程管理</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li ui-sref-active="active">
+        <a ui-sref="app.process.list" ui-sref-opts="{reload:true}">
+          <span>新建流程</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.process.list" ui-sref-opts="{reload:true}">
+          <span>流程列表</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li ng-class="{active:$state.includes('app.workmanager')}">
+    <a href class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="fa fa-tasks icon"></i>
+      <span>工作管理</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li ui-sref-active="active">
+        <a ui-sref="app.workmanager.inprocess" ui-sref-opts="{reload:true}">
+          <span>进行中流程</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.workmanager.doneprocess" ui-sref-opts="{reload:true}">
+          <span>已完成流程</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.workmanager.doneprocess" ui-sref-opts="{reload:true}">
+          <span>已退回流程</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li ng-class="{active:$state.includes('app.modulemanager')}">
+    <a href class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="fa fa-tasks icon"></i>
+      <span>模块管理</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li ui-sref-active="active">
+        <a ui-sref="app.modulemanager.city" ui-sref-opts="{reload:true}">
+          <span>城区管理</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.modulemanager.picture" ui-sref-opts="{reload:true}">
+          <span>图片模块</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.modulemanager.comment" ui-sref-opts="{reload:true}">
+          <span>表单模块</span>
+        </a>
+      </li>
+      <!-- <li ui-sref-active="active">
+        <a ui-sref="app.modulemanager.comment" ui-sref-opts="{reload:true}">
+          <span>备注模块</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.modulemanager.product" ui-sref-opts="{reload:true}">
+          <span>产品配置</span>
+        </a>
+      </li> -->
+    </ul>
+  </li>
+  <li ng-class="{active:$state.includes('app.information')}">
+    <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+             </span>
+      <i class="fa fa-tasks icon"></i>
+      <span>APP信息维护</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li ui-sref-active="active">
+        <a ui-sref="app.information.feedback" ui-sref-opts="{reload:true}">
+          <span>用户反馈</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.information.aboutus" ui-sref-opts="{reload:true}">
+          <span>关于我们</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.information.announcement" ui-sref-opts="{reload:true}">
+          <span>系统公告</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li ng-class="{active:$state.includes('app.message')}">
+    <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+             </span>
+      <i class="fa fa-tasks icon"></i>
+      <span>通知消息</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li ui-sref-active="active">
+        <a ui-sref="app.message.send" ui-sref-opts="{reload:true}">
+          <span>发送消息</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.message.list" ui-sref-opts="{reload:true}">
+          <span>消息列表</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>

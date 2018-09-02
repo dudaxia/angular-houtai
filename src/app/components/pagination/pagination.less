@@ -1,0 +1,68 @@
+@import "../../assets/stylesheets/structure/app.variables.less";
+.pagination-new{
+  float: right;
+  > li{
+    &:first-child {
+      > a,
+      > span {
+        margin-left: 0;
+        border-radius: 4px;
+      }
+    }
+    &:last-child {
+      > a,
+      > span {
+        border-radius: 4px;
+      }
+    }
+    > a,>span{
+      border-color: @border-color;
+      border-radius:4px;
+      margin-right:10px;/**/
+      color:@text-color;
+      &:hover,
+      &:focus{
+        color:@brand-primary;
+        border-color: @brand-primary;
+        
+        background-color:white;
+      }
+      
+    }
+    &.goto{
+      > a,>span{
+      border:0;
+      padding:0;
+      
+      margin-right:10px;/**/
+      
+      &:hover,
+      &:focus{
+        color:inherit;
+              
+      }
+      
+    }
+    }
+    >.active{
+      >a{
+        color:white;
+        border-color: @brand-primary;
+        
+        background-color: @brand-primary;
+      }
+    }
+  }
+}
+.clearfix:after{
+  content:'';
+  display:block;
+  height:0;
+  clear:both;
+}
+.fl {
+  float:left;
+}
+.fr {
+  float:right;
+}

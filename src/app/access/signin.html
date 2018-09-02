@@ -1,0 +1,26 @@
+<div class="container w-xxxl w-auto-xs" ng-init="app.settings.container = false;">
+  <a class="navbar-brand block m-t" href>{{app.name}}</a>
+  <div class="m-b-lg">
+
+    <section class="panel panel-default bg-white m-t-lg">
+      <header class="panel-heading text-center">
+        <strong>登录</strong>
+      </header>
+      <form class="panel-body" form-validator formvalidatorconfig="eventformvalidate" method="post">
+        <div class="form-group">
+          <label class="control-label">邮箱</label>
+          <input class="form-control input-lg" data-rule-required="true" id="email" name="email" ng-model="loginData.email" placeholder="Email" type="text">
+        </div>
+        <div class="form-group">
+          <label class="control-label">密码</label>
+          <input class="form-control input-lg" data-rule-required="true" id="password" name="password" ng-disabled="psdisabled" ng-model="loginData.password" placeholder="Password" type="password">
+        </div>
+        <!-- <div id="login_captcha" class="m-t-md"></div> -->
+        <!-- <a href="javascript:;" class="pull-right m-t-xs" ng-click="restPassword()"><small>忘记密码？</small></a> -->
+        <button btn-loading="loginloading" class="btn btn-primary m-t-sm" loading-text="登录中..." ng-disabled="psdisabled" type="submit">登录</button>
+
+      </form>
+    </section>
+  </div>
+
+</div>

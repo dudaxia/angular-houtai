@@ -1,0 +1,69 @@
+
+<style>
+  tbody {
+    border-top: none !important;
+  }
+  .table > tbody > tr > td, .table > tfoot > tr > td { vertical-align: middle;}
+</style>
+<section class="vbox">
+  <header class="header bg-white b-b clearfix">
+    <div class="m-t"></div>应用列表
+  </header>
+  <div class="section scrollable wrapper w-f">
+    <div class="panel-body">
+      <div class="clearfix m-b">
+        <div class="input-group pull-left" style="width:200px;">
+          <input type="text" class="input-sm form-control" maxlength="50" placeholder="请输入应用名称" name="value" ng-model="searchparams.value" />
+              <span class="input-group-btn">
+                  <button class="btn btn-sm btn-default" type="button" title="查询" ng-click="onSubmit()">
+                    <i class="fa fa-search"></i>
+                  </button>
+              </span>
+        </div>
+        <div class="m-l-sm input-group pull-left">
+          <a ng-click="addApplication()" class="btn btn-sm btn-default m-r-sm" permission indata="loginAuthData" btndesc="application:add">新建应用</a>
+        </div>
+      </div>
+      <div loading-container="tableParams.settings().$loading" class="table-responsive m-b-md">
+        <div permission indata="loginAuthData" btndesc="application:list">
+          <table ng-table="tableParams" pager-target="#ng-pagination" class="table table-striped table-hover">
+            <thead>
+            <tr>
+              <th>应用名称</th>
+              <th>应用编号</th>
+              <th>更新时间</th>
+              <th>描述</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="item in $data.recordList track by $index">
+            <tr>
+              <td>{{item.value}}</td>
+              <td>{{item.code}}</td>
+              <td>{{item.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td popover="{{item.desc}}" popover-placement="top" popover-trigger="mouseenter" popover-append-to-body="true">{{item.desc | showelepsis}}</td>
+              <td>
+                <a href="javascript:;" ng-click="editApplication(item)" class="text-href m-r" permission indata="loginAuthData" btndesc="application:modify">编辑</a>
+                <a href="javascript:;" ng-click="deleteApplication(item)" class="text-href" permission indata="loginAuthData" btndesc="application:delete">删除</a>
+              </td>
+            </tr>
+            </tbody>
+            <tbody ng-if="!tableParams.settings().$loading">
+            <tr class="text-center">
+              <td colspan="10" ng-if="$data.length == 0">暂无数据</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer bg-white" fix-footer-ex="" fix-con-selector=".main-content" style="left: 200px;padding:2px 240px 0 10px;">
+    <div class="row text-center-xs">
+      <div class="col-md-5 hidden-sm">
+        <p class="text-muted m-t">总共{{ tableParams.total() }}条 当前为第{{ tableParams.page() }}页</p>
+      </div>
+      <div id="ng-pagination" class="col-md-7 col-sm-12 text-right text-center-xs"></div>
+    </div>
+  </footer>
+</section>

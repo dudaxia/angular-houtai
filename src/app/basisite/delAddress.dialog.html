@@ -1,0 +1,13 @@
+<form class="form-horizontal" form-validator formvalidatorconfig="eventformvalidate" method="post">  
+    <div class="modal-header">
+        <h4 class="modal-title inline">{{isEdit?"编辑":"新建"}}城区</h4>
+        <button type="button" class="close" ng-click="cancel()" class="pull-right">&times;</button>
+    </div>
+    <div class="modal-body">
+        是否确认删除该信息？
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" btn-loading="saveloading" loading-text="创建中...">确定</button>
+        <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</form>

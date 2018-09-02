@@ -1,0 +1,9 @@
+<a dropdown-toggle class="btn {{dropdownselectsize}} btn-default dropdown-toggle" >
+    <span class="dropdown-label">{{checked.title}}</span>
+    <span class="caret"></span>
+</a>
+<ul class="dropdown-menu  dropdown-select dropdown-select-50">
+    <li ng-repeat="item in data" ng-class="{active:item.value==checked.value}">
+        <a href="javascript:;" ng-click="select(item)">{{item.title}}</a>
+    </li>
+</ul>

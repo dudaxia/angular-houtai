@@ -1,0 +1,58 @@
+
+<form class="form-horizontal vbox" form-validator formvalidatorconfig="eventformvalidate" method="post">
+  <section class="hbox stretch">
+    <section class="vbox">
+      <header class="header bg-white b-b clearfix">
+        <div class="row m-t-sm">
+          <div class="col-sm-8 m-b-xs">
+            <span class="m-r">公司管理</span>
+            <div class="btn-group m-r-xs">
+              <a class="btn btn-primary pointer m-r-xs btn-sm" href="javascript:;" ng-click="addCompanyFun()">添加公司</a>
+            </div>
+          </div>
+        </div>
+      </header>
+      <section class="scrollable wrapper w-f">
+        <section class="panel panel-default">
+          <div class="panel-body">
+            <div class="clearfix" ng-if="!addCompany">
+              <div class="col-sm-2" subside-menu  layout="1"  has-center="false" current-menu="currentMenu" get-content-detail="getContentDetail(url)" ng-if="subMenu.length"></div>
+              <div class="col-sm-10 instruction-list g-mb60" style="padding-right:0;">
+                <div class="bg-white wrapper-sm h-full">
+                  <div ng-include="'/app/organization/company/'+ pageId +'.html'" ng-if="pageId"></div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white wrapper-sm" ng-if="addCompany">
+              <div class="aside-content bg-light lter form-horizontal wrapper-xs normal-content">
+                <div class="form-group m-t">
+                   <label class="col-sm-1 control-label must" style="width: 120px;">公司名称</label>
+                   <div class="col-sm-8">
+                     <input class="form-control" placeholder="请输入公司名称" data-rule-required="true" type="text" ng-model="entity.share.title" name="share.name">                   
+                     <!-- <span class="help-block">分享标题,展示在分享信息中，请认真填写，最多30字</span> -->
+                   </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-1 control-label" style="width: 120px;">公司logo</label>
+                  <div class="col-sm-6">
+                    <a class="btn btn-primary pointer m-r-xs btn-sm" href="javascript:;">上传图片</a>
+                    <!-- <div class="clearfix" ng-if="!shareLoading"><a class="pull-left hover-cover img-hover-animation pos-rlt" ng-click="changShareImagePath(currentPageData)" href="javascript:;">
+                      <div class="img-hover-animation-text">更换图片</div>
+                      <div class="all-background-cover b-a" style="background-image: url({{currentPageData.share.url}});width:78px;height:100px" ng-if="!PageSettingloading" >&nbsp;</div>
+                    </a>
+                    </div>
+                    <button ng-if="currentPageData.share.url" type="button" ng-click="changShareImageClear(currentPageData)" class="btn btn-sm btn-default m-t-xs">清除</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+      <footer class="footer bg-white b-t text-right pos-abt">
+        <button type="submit" class="btn btn-primary" btn-loading="saveloading" loading-text="保存中...">保存</button>
+        <button type="button" class="btn btn-default" back-state="">取消</button>
+    </footer>
+    </section>
+  </section>
+</form>

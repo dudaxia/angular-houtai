@@ -1,0 +1,7 @@
+<div style="widit:100%;max-height: 420px;overflow: auto;" ng-class="{'wrapper b-a b-light':preview}">
+    <div ng-bind-html="content" ng-if="preview"></div>
+    <!-- <iframe2 ng-model="content"></iframe2> -->
+    <div ng-hide="preview">
+        <textarea rows="13" class="form-control" kindeditor data-ng-model="content" data-config="default"></textarea>
+    </div>
+</div>

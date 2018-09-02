@@ -1,0 +1,7 @@
+<a class="close m-r-xs m-t-xs" ng-click="$hide()">&times;</a>
+<h3 class="popover-title" ng-if="popupTitle">{{popupTitle}}</h3>
+<div class="popover-content" ng-bind-html="popupBody" ng-if="popupBody">
+</div>
+<div class="popover-content" ng-if="popupQrcode" style="text-align: center;">
+    <qrcode data="{{popupQrcode}}"   size="130" version="5"></qrcode>
+</div>

@@ -1,0 +1,151 @@
+/*
+ * @Author: hui.wang 
+ * @Date: 2017-10-16 10:36:09 
+ * @Last Modified by: hui.wang
+ * @Last Modified time: 2017-10-31 10:23:21
+ */
+
+
+.menus-nav{ 
+    /*width: 220px;*/
+    padding-left: 0;
+    padding-right: 0;
+    .menu-logo{
+        width:14px;
+        height:14px;
+        margin-right:8px;
+        margin-top:3px;
+        background-size:cover;
+        background-position:center;
+    }
+
+    .margin-t-3{
+        margin-top:3px;
+    }
+    .fa{
+        font-size:14px;
+    }
+  
+    .nav-menu-new {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        list-style-type: none;
+        font-size:14px;
+        
+        li {
+            position: relative;
+            margin: 0;  
+            border: 1px solid #EFEFEF;
+            border-top-width: 0px; 
+            &>span {
+                display: block;
+                padding: 12px 10px;
+                line-height: 1em;
+            }
+            &>a {
+                display: block; 
+                height:50px; 
+                line-height:20px;
+                padding:15px 14px;
+                font-size:14px;
+                >span{
+                    display: inline-block;
+                    max-width:152px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
+                &>i {
+                       display: block;
+                }
+               
+                &.active {
+                    background: #fff;                   
+                    &.nosub{
+                        margin-left:-1px;
+                        border: 0 solid #0088FF;
+                        border-left-width:2px;
+                        background: #E0F1FF;   
+                        color:#0088FF;                         
+                    }
+                } 
+                
+                  &:hover{
+                    background: #f5f5f5;    
+                    margin-left:0;
+                    border-left-width:0; 
+                 }  
+                
+            }
+           
+            >ul{
+                display: none;
+            }
+
+            &.isopen>ul{
+                display: block;
+            }
+        }
+        &.menu-sub{
+            &>li{
+                border:none;
+                background-color: #fff;
+                &>a{
+                    padding-left:35px;
+                    // &.active,&:hover{
+                   /*  &.active{ 
+                        margin-left:-1px;
+                        border: 0 solid #0088FF;
+                        border-left-width:2px;
+                        background: #E0F1FF;   
+                        color:#0088FF;                          
+                    }  */
+                }
+            }
+            
+        }
+        &.menu-sub-third{
+            li{
+                border:none;                             
+                &>a{
+                    padding-left:55px;
+                    font-size:12px;
+                    color:#9797A1 ;
+                }
+                // &>a.active,&>a:hover{
+                &>a.active{
+                    margin-left:-1px;
+                    border: 0 solid #0088FF;
+                    border-left-width:2px;
+                    background: #E0F1FF;  
+                    color:#0088FF ;               
+                }
+                &>a:hover{
+                    color:#595961;
+                }
+            }
+        }
+        &.nav-new-top{
+            border-top: 1px solid #EFEFEF;
+            margin-bottom:10px;
+            &>li {
+            &:after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                height: 0px;
+                border-radius: 100px;
+                left: 5px;
+                right: 25%;
+                background: #fff;
+            }  
+            &:last-child {
+                &:after {
+                    height: 0;
+                }
+            }
+        }
+        }
+    }
+}

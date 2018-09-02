@@ -1,0 +1,21 @@
+
+<ul class="list-unstyled list-inline upload-list" style="margin-bottom: 0;margin-top: 8px;">
+  <li ng-repeat="f in fileList" style="margin-left: 15px;">
+    <a href="javascript:;" class="close" ng-click="del($index)" ng-show="!hide"><i class="fa fa-times-circle"></i></a>
+    <span class="m-r-xs"><a class="text-href">{{f.name}}</a></span>
+  </li>
+  <li class="add" ng-show="maxCount>fileList.length" ng-file-select ng-model="files" class="drop-box" drag-over-class="dragover" allow-dir="true" accept="{{ fileType }}" style="margin-top: -8px; margin-left: 15px;">
+    <a class="btn btn-default " href="javascript:;" style="float:left;"><i class="fa fa-plus m-r-xs"></i>选择文件</a>
+    <div class="uploadify-queue m-l" style="float:left;">
+      <div id="upload{{$index}}" class="uploadify-queue-item" style="margin-top: 7px" ng-repeat="f in files">
+        <div ng-if="!f.success">
+          <p class="m-r-xs inline">{{f.name}}</p><span class="m-r-xs">({{f.size|formatBytes}})</span><span class="m-r-xs">{{f.fileProgress}}</span>
+           <div class="uploadify-progress">
+             <div class="uploadify-progress-bar" style="width: {{f.fileProgress}}%;"> </div>
+           </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</ul>
+<!-- <div class="help-block">最多{{maxCount}}个文件</div> -->

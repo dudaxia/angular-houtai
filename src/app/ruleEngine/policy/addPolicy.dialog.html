@@ -1,0 +1,203 @@
+<form form-validator  formvalidatorconfig="policyEdit" method="post" class="form-horizontal">
+  <style>
+    .clearfix:after{
+      content: "";
+      height: 0;
+      overflow: hidden;
+      clear: both;
+    }
+    .slider{
+      margin-top: 20px;
+    }
+    .slider ul li{
+      position: relative;
+      width: 70px;
+      height:23px;
+      float: left;
+      list-style-type:none;
+    }
+    .yuan{
+      border-radius: 100%;
+      width: 20px;
+      height:20px;
+      border:3px #00a2d4 solid;
+      position: absolute;
+      top:0;
+      left: 90px;
+      z-index:10;
+    }
+    .number{
+      position: absolute;
+      left: 30px;
+      top: -20px;
+      color:#b6b6b6;
+    }
+    .xian{
+      position: absolute;
+      width: 70px;
+      height:2px;
+      background: #b6b6b6;
+      left: 20px;
+      top:50%;
+      transform: translate(0,-50%);
+      margin-top: -1px;
+    }
+    .clearfix_padd{
+      padding: 0;
+    }
+    .rank_text input,
+    .rank_text .divinput{
+      width: 40px;
+      margin-left: 48px;
+      position: relative;
+      right:-34px;
+    }
+    .hd-title {
+      font-size: 16px;
+      line-height: 30px;
+      border-bottom: 1px solid #e4e4e4;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
+    .modal-body {
+      padding: 20px 30px;
+    }
+    .red{
+      color: #FF0000;
+    }
+  </style>
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" class="pull-right">&times;</button>
+    <h4 class="modal-title">添加策略</h4>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label class="col-sm-3 control-label must">策略名称 ：</label>
+      <div class="col-sm-8">
+        <input name="name" class="form-control input-sm" data-rule-maxlength="30" ng-model="vm.name" required="true" data-rule-maxlength='30'/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label must">应用：</label>
+      <div class="col-sm-8">
+        <select ng-model="vm.applicationCode" name="applicationCode" ng-options="s.code as s.value for s in applicationList" class="form-control w300" required>
+          <option value="">请选择</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label must">事件类型：</label>
+      <div class="col-sm-8">
+        <select ng-model="vm.eventCode" name="eventCode" ng-options="s.code as s.value for s in eventList" class="form-control w300" ng-change="riskLevel(vm.eventCode,vm.patternCode)" required>
+          <option value="">请选择</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label must">风险类型：</label>
+      <div class="col-sm-8">
+        <select ng-model="vm.riskTypeCode" name="riskTypeCode" ng-options="s.code as s.value for s in riskTypeList" class="form-control w300" required>
+          <option value="">请选择</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label must">策略模式：</label>
+      <div class="col-sm-8">
+        <select ng-model="vm.patternCode" name="patternCode" ng-options="s.code as s.value for s in patternList" class="form-control w300" ng-change="riskLevel(vm.eventCode,vm.patternCode)" required>
+          <option value="">请选择</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label must">风险级别及阀值 ：</label>
+      <div class="col-sm-8">
+        <div class="slider">
+          <ul class="clearfix clearfix_padd">
+            <!-- <li ng-repeat="item in maxLevel track by $index">
+              <div class="yuan"></div>
+              <div class="xian">
+                <span class="number">{{$index}}</span>
+              </div>
+            </li>
+            <li ng-if="maxLevel">
+              <div class="yuan"></div>
+            </li> -->
+            <!-- <div class="rank_text">
+              <div class="fl" ng-repeat="item in vm.thresholds track by $index" style="float:left;">
+                <input type="text" ng-model="item" name="thresholds[{{$index}}]" required ng-change="changeThresholds(item,$index)" data-rule-number="true" data-rule-max="10000">
+              </div>
+            </div> -->
+          </ul>
+          <div class="rank_text">
+            <div class="fl m-b-md" ng-repeat="item in vm.thresholds track by $index" style="float:left;" ng-if="vm.thresholds.length">
+              <ul class="clearfix clearfix_padd">
+                <li ng-if="$index==0" style="width:0;">
+                  <div class="yuan" style="position: absolute;left:0;"></div>
+                </li>
+                <li>
+                  <div class="xian">
+                    <span class="number">{{$index}}</span>
+                  </div>
+                  <div class="yuan"></div>
+                </li>
+                <li ng-show="$index==vm.thresholds.length-1" style="width:0px;">
+                  <div class="xian" style="position: absolute;left:40px;">
+                    <span class="number">{{$index+1}}</span>
+                  </div>
+                  <div class="yuan" style="position: absolute;left:110px;"></div>
+                </li>
+              </ul>
+              <input class="thresholds_input" type="text" ng-model="item" name="thresholds[{{$index}}]" required ng-change="changeThresholds(item,$index)" data-rule-number="true" data-rule-max="10000">
+            </div>
+            <div class="fl m-b-md" ng-repeat="item in maxLevel track by $index" style="float:left;" ng-if="!vm.thresholds.length">
+              <ul class="clearfix clearfix_padd">
+                <li ng-if="$index==0" style="width:0;">
+                  <div class="yuan" style="position: absolute;left:0;"></div>
+                </li>
+                <li>
+                  <div class="xian">
+                    <span class="number">{{$index}}</span>
+                  </div>
+                  <div class="yuan"></div>
+                </li>
+                <li ng-show="$index==vm.thresholds.length-1" style="width:0px;">
+                  <div class="xian" style="position: absolute;left:40px;">
+                    <span class="number">{{$index+1}}</span>
+                  </div>
+                  <div class="yuan" style="position: absolute;left:110px;"></div>
+                </li>
+              </ul>
+              <div class="divinput"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label"></label>
+      <div class="col-sm-8">
+        <p class="red">* （风险级别依次表示风险增大）</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">标志码：</label>
+      <div class="col-sm-8">
+        <input class="form-control" name="identificationCode" ng-model="vm.identificationCode" data-rule-Lettersnumbers="true" placeholder="同应用同事件类型下唯一标识" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">描述：</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="desc" rows="3" ng-model="vm.desc" data-rule-maxlength="100" placeholder="最多100字"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" btn-loading="saveloading" loading-text="保存中..." type="submit">保存</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">取消</button>
+  </div>
+</form>

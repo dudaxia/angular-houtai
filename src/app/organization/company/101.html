@@ -1,0 +1,38 @@
+<div loading-container="tableParams.settings().$loading" class="table-responsive">
+  <table pager-target="#ng-pagination" class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>列表ID</th>
+        <th>列表名称</th>
+        <th>应用名</th>
+        <th>列表类型</th>
+        <th>描述</th>
+        <th>创建者</th>
+        <th>修改者</th>
+        <th>上次修改时间</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="item in recordList">
+      <tr>
+        <td>{{item.id}}</td>
+        <td title="{{item.name}}">{{item.name|showelepsis}}</td>
+        <td title="{{item.applicationName}}">{{item.applicationName|showelepsis}}</td>
+        <td title="{{item.typeName}}">{{item.typeName|showelepsis}}</td>
+        <td title="{{item.desc}}">{{item.desc|showelepsis}}</td>
+        <td>{{item.createUser}}</td>
+        <td>{{item.updateUser}}</td>
+        <td>{{item.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td>
+          <a ng-click="editList(item.id)" class="text-href m-r">编辑</a>
+          <a ng-click="deleteList(item.id)" class="text-href m-r">删除</a>
+        </td>
+      </tr>
+    </tbody>
+    <tbody ng-if="!tableParams.settings().$loading">
+      <tr class="text-center">
+        <td colspan="10" ng-if="$data.length == 0">暂无数据</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

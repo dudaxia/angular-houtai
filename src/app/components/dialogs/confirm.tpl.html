@@ -1,0 +1,14 @@
+<div class="modal-header dialog-header-confirm" ng-if="header">
+    <button type="button" class="close" ng-click="no()">&times;</button>
+    <h4 class="modal-title">{{header}}</h4>
+</div>
+<div class="modal-body">
+    <div ng-if="!header">
+        <button type="button" class="close" ng-click="no()" ng-style="{'margin-top':'-10px'}">&times;</button>
+    </div>
+    <div class="xbody" ng-bind-html="msg"></div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="yes()">{{"DIALOGS_YES" | translate}}</button>
+    <button type="button" class="btn btn-default" ng-click="no()">{{"DIALOGS_NO" | translate}}</button>
+</div>

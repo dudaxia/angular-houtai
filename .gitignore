@@ -1,0 +1,5 @@
+node_modules/
+.sass-cache/
+.tmp/
+/dist
+node_modules.7z

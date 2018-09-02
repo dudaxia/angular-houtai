@@ -1,0 +1,1071 @@
+<!--<link href="../src/app/tactics/tactics.css" rel="stylesheet" />-->
+<!--规则管理-->
+<style>
+  .rule_wrapper{
+    width: 600px;
+  }
+  .btn-default{
+    margin-left: 33%;
+  }
+  .btn-group{
+    float: right;
+    margin: 20px 80px;
+  }
+
+  .hd-title {
+    font-size: 16px;
+    line-height: 30px;
+    border-bottom: 1px solid #e4e4e4;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+  }
+  .modal-body {
+    padding: 20px 30px;
+  }
+  .red{
+    color: #FF0000;
+  }
+  /*规则管理*/
+  .rule_number{
+    color: #999999;
+    padding: 10px 0;
+  }
+  .rule_text{
+    font-weight:700;
+  }
+  .rule_top_text{
+    color: #717171;
+    font-weight:700;
+  }
+  .rule_top_delete{
+    font-size: 20px;
+  }
+  .rule_left{
+    float: left;
+  }
+  .rule_weight{
+    float: left;
+    width: 70px;
+  }
+  .rule_weight_drop{
+    margin-left: 10px;
+  }
+  .rule_weight_text{
+    padding: 5px;
+    line-height: 35px;
+  }
+  .rule_pointer{
+    padding: 10px 0;
+  }
+
+
+  #div1{
+        width: 55px;
+        height: 30px;
+        border-radius: 50px;
+        position: relative;
+    }
+    #div2{
+        width: 25px;
+        height: 25px;
+        border-radius: 48px;
+        position: absolute;
+        background: white;
+        box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+    }
+    .open1{
+        background: rgba(0,184,0,0.8);
+    }
+    .open2{
+        top: 2px;
+        right: 1px;
+    }
+    .close1{
+        background: rgba(255,255,255,0.4);
+        border:3px solid rgba(0,0,0,0.15);
+        border-left: transparent;
+    }
+    .close2{
+        left: 0px;
+        top: 0px;
+        border:2px solid rgba(0,0,0,0.1);
+    }
+    .bg-white{background: #fff;}
+    .border{border: 1px solid #cfdadd;border-radius:4px;}
+    .line{width:100%;height:2px;margin:10px 0;font-size:0;overflow:hidden;background-color:transparent;border-width:0;border-top:1px solid #58866e;}
+    .line-lg{margin-top:15px;margin-bottom:15px;}
+    .line-dashed{border-style: dashed;}
+    .pull-in{margin-left:-15px;margin-right:-15px;}
+    .sub-title{font-weight: 700;margin-left:-20px;}
+    .modal-footer{text-align: center;}
+</style>
+<section class="vbox">
+  <header class="header bg-white b-b clearfix">
+    <button type="button" ui-sref="app.management.policy.addTactics({applicationCode:vm.applicationCode,eventCode:vm.eventCode,desc:vm.desc,identificationCode:vm.identificationCode,name:vm.name,riskTypeCode:vm.riskTypeCode,patternCode:vm.patternCode,riskThresholdList:vm.thresholds,id:vm.id})" class="btn btn-default">基础设置</button>
+    <button type="button" class="btn btn-primary">规则管理</button>
+    <div class="btn-group m-t-md" permission indata="loginAuthData" btndesc="rule:add">
+      <a class="btn btn-sm btn-default" ng-click="addTemplet()" ng-disabled="buttonAdd">
+        <i class="fa fa-plus m-r-xs"></i>添加
+      </a>
+    </div>
+  </header>
+
+  <div class="section scrollable wrapper w-f">
+    <div class="load" ng-if="listLoading">数据加载中</div>
+    <form id="ruleList" form-validator formvalidatorconfig="listEdit" method="post" class="form-horizontal" ng-show="!listLoading">
+      <div ui-sortable="sortableOptions" ng-model="ruleList">
+        <div ng-repeat="item in ruleList track by $index" permission indata="loginAuthData" btndesc="rule:list">
+          <div class="form-group bg-white border dd-move">
+            <div class="col-sm-9 rule_number">
+              <span ng-if="!item.id">未保存</span>
+              <span ng-if="item.id">[编号: <span class="rule_text">{{item.id}}</span> ]</span>
+              <input ng-if="!item.id||item.show" class="valid form-control" type="text" name="name" ng-model="item.name" data-rule-required="true" style="width:20%;display: inline-block;">
+              <!-- <span ng-if="!item.show" class="rule_top_text" >{{item.name}}</span> -->
+              <span modify-rule-name old-info="item" blur-fun="saveNewName(item,$index)"></span>
+            </div>
+            <div class="col-sm-3 m-t-sm">
+              <div class="col-sm-1 w-xxs" permission indata="loginAuthData" btndesc="rule:disable,rule:enable">
+                <div id="div1" ng-class="{true: 'open1', false: 'close1'}[{{item.enable | enable}}]">
+                  <div id="div2" ng-class="{true: 'open2', false: 'close2'}[{{item.enable| enable}}]" ng-click="change(item.id,item.enable,$event)"></div>
+                </div>
+              </div>
+              <!-- <a href="javascript:;" popup-confirm="" popup-placement="left" popup-body="是否确定删除&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" popup-confirm-callback="delete(item.id,$event)" class="btn btn-sm m-l-sm" title="删除">
+                删除
+              </a> -->
+              <a href="javascript:;" ng-click="delete(item.id)" class="btn btn-sm m-l-sm" title="删除" permission indata="loginAuthData" btndesc="rule:delete">
+                删除
+              </a>
+              <a href="javascript:;" class="btn btn-sm m-l-sm">
+                <span ng-if="!item.show" ng-click="showItem(item,$index,'display')">展开</span>
+                <span ng-if="item.show" ng-click="showItem(item,$index,'up')">收起</span>
+              </a>
+            </div>
+          </div>
+          <div ng-if="item.show">
+            <!--频度统计 111 模板1-->
+            <div class="modal-body" ng-if="item.templateId==1">
+
+              <div class="rule_wrapper">
+
+                <div class="form-group">
+                  <label class="radio-inline checks float_left sub-title">
+                    属性配置
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">配置权重 ：</label>
+                  <div class="col-sm-8">
+                    <div class="rule_weight" ng-if="vm.patternCode==2">
+                      <input name="attributeConfig" class="form-control valid" ng-model="item.attributeConfig" data-rule-required="true" />
+                      <input name="relation" class="form-control hide" ng-model="item.conditionConfigBean.relation" />
+                      <input name="strategyId" class="form-control hide" ng-model="item.strategyId" />
+                    </div>
+                    <div class="rule_weight" ng-if="vm.patternCode==1||vm.patternCode==3">
+                      <select name="timeSliceUnitCode" ng-model="item.attributeConfig"  class="form-control valid" data-rule-required="true" ng-options="s.value as s.value for s in attributeConfigList">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="radio-inline checks float_left sub-title">
+                    条件配置
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">描述 ：</label>
+                  <div class="col-sm-8">
+                    <input name="desc" class="form-control valid" ng-model="item.conditionConfigBean.templateConfig.configData.desc" data-rule-required="true" placeholder=""/>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">时间片 ：</label>
+                  <div class="col-sm-6">
+                    <div class="rule_weight">
+                      <input name="timeSlice" class="form-control valid" ng-model="item.conditionConfigBean.templateConfig.configData.timeSlice" data-rule-required="true" />
+                    </div>
+                    <div class="rule_weight rule_weight_drop">
+                      <select name="timeSliceUnitCode" ng-model="item.conditionConfigBean.templateConfig.configData.timeSliceUnitCode"  class="form-control valid" data-rule-required="true" ng-options="s.code as s.value for s in timeUnits">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                    <span class="rule_weight_text">统计不包含当前事件</span>
+                  </div>
+                  <div class="col-sm-3">
+                    <i class="fa fa-question-circle m-l-sm  pointer rule_pointer" popover="规则计算的时间范围，如1个月则表示基于当前时间往前追溯1个月" popover-placement="right" popover-trigger="mouseenter" popover-title="时间片：" popover-append-to-body="true"></i>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">主属性：</label>
+                  <div class="col-sm-6">
+                    <select name="masterAttr" ng-model="item.conditionConfigBean.templateConfig.configData.masterAttr" ng-options="s.name as s.displayName for s in fields" class="form-control valid w300" data-rule-required="true" ng-change="getCalcList(item.conditionConfigBean.templateConfig.configData.masterAttr,item.conditionConfigBean.templateConfig.configData.slaverAttr,item.conditionConfigBean.templateConfig.configData)">
+                      <option value="">请选择</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-3">
+                    <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                       popover="示例:
+                      1) 主属性为用户且从属性为空，表示用户出现的次数
+                      2) 主属性为用肿户且从属性为IP,表示在IP上出现次数或用户关联的IP个数" popover-placement="right"
+                       popover-trigger="mouseenter" popover-title="主属性：" popover-append-to-body="true"></i>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">从属性：</label>
+                  <div class="col-sm-6">
+                    <select name="slaverAttr" ng-model="item.conditionConfigBean.templateConfig.configData.slaverAttr" ng-options="s.name as s.displayName for s in fields" class="form-control valid w300" ng-change="getCalcList(item.conditionConfigBean.templateConfig.configData.masterAttr,item.conditionConfigBean.templateConfig.configData.slaverAttr,item.conditionConfigBean.templateConfig.configData)">
+                      <option value="">请选择</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-3">
+                    <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                       popover="示例:
+                    依据选择的计算方式分为:
+                    1) 主属性在从属性出现的次数
+                    2) 主属性关联从属性的个数" popover-placement="right"
+                       popover-trigger="mouseenter" popover-title="从属性：" popover-append-to-body="true"></i>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">计算方式：</label>
+                  <div class="col-sm-6">
+                    <select name="calcTypeCode" ng-model="item.conditionConfigBean.templateConfig.configData.calcTypeCode" ng-options="s.code as s.value for s in item.conditionConfigBean.templateConfig.configData.calcMethods" class="form-control valid w300" data-rule-required="true">
+                      <option value="">请选择</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-3">
+                    <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                       popover="在主属性为用户，从属性为IP情况下:
+                    1) 求出现次数
+                    含义为用户在IP上出 现的次数
+                    2) 求关联个数
+                    含义为用户关联过的IP个数" popover-placement="right"
+                       popover-trigger="mouseenter" popover-title="
+                    计算方式 ：" popover-append-to-body="true"></i>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">比较：</label>
+                  <div class="col-sm-6">
+                    <select name="compareCode" ng-model="item.conditionConfigBean.templateConfig.configData.compareCode" class="form-control valid w300" data-rule-required="true" ng-options="s.code as s.value for s in compareCode">
+                      <option value="">请选择</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-3">
+                    <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                       popover="常见的比较 运算符" popover-placement="right"
+                       popover-trigger="mouseenter" popover-title="
+                    比较 ：" popover-append-to-body="true"></i>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">阀值：</label>
+                  <div class="col-sm-6">
+                    <input name="threshold" class="form-control valid" ng-model="item.conditionConfigBean.templateConfig.configData.threshold" data-rule-required="true"/>
+                  </div>
+                  <div class="col-sm-3">
+                    <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                       popover="当某个条件达到一定的程度，用于与该阈值比较" popover-placement="right"
+                       popover-trigger="mouseenter" popover-title="
+                    阀值 ：" popover-append-to-body="true"></i>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">作用域：</label>
+                  <div class="col-sm-6">
+                    <select name="scopeEventCode" ng-model="item.conditionConfigBean.templateConfig.configData.scopeEventCode" class="form-control valid w300" data-rule-required="true" ng-options="s.code as s.value for s in eventCode">
+                      <option value="">请选择</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-3">
+                    <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                       popover="规则计算的数据范围，按范围从小到大依次为本应用、全局。" popover-placement="right"
+                       popover-trigger="mouseenter" popover-title="
+                    作用域 ：" popover-append-to-body="true"></i>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must"></label>
+                  <div class="col-sm-6">
+                    <select name="scopeApplicationCode" ng-model="item.conditionConfigBean.templateConfig.configData.scopeApplicationCode" class="form-control valid w300" data-rule-required="true" ng-options="s.code as s.value for s in applicationCode">
+                      <option value="">请选择</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-3">
+                    <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                       popover="命中条件后,结果干预时间内，再次访问会直接返回设定的风险结果" popover-placement="right"
+                       popover-trigger="mouseenter" popover-title="
+                    结果干预时间 ：" popover-append-to-body="true"></i>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">结果干预时间 ：</label>
+                  <div class="col-sm-6">
+                    <div class="rule_weight">
+                      <input name="deadTime" class="form-control valid" ng-model="item.conditionConfigBean.templateConfig.configData.deadTime" data-rule-required="true" />
+                    </div>
+                    <div class="rule_weight rule_weight_drop">
+                      <select name="deadTimeUnitCode" ng-model="item.conditionConfigBean.templateConfig.configData.deadTimeUnitCode"  class="form-control valid" data-rule-required="true" ng-options="s.code as s.value for s in timeUnits">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                    <span class="rule_weight_text">统计不包含当前事件</span>
+                  </div>
+                  <div class="col-sm-3">
+                    <i class="fa fa-question-circle m-l-sm  pointer rule_pointer" popover="规则计算的时间范围，如1个月则表示基于当前时间往前追溯1个月" popover-placement="right" popover-trigger="mouseenter" popover-title="时间片：" popover-append-to-body="true"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label">
+                  <button class="btn" type="button" ng-click="addFilter(item.conditionConfigBean.templateConfig.configData.conditionsMap.list, $index)"><i class="fa fa-plus m-r-xs"></i>添加过滤条件</button>
+                </label>
+              </div>
+
+              <div style="float:left;width:1005px">
+                <div class="form-group" ng-repeat="vm in item.conditionConfigBean.templateConfig.configData.conditionsMap.list track by $index">
+                  <div class="rule_left col-sm-2">
+                    <label class="col-sm-2" ng-if="$index==0">
+                      <div class="rule_weight_drop w-xs">
+                        <select ng-model="item.conditionConfigBean.templateConfig.configData.conditionsMap.relation" class="form-control valid" data-rule-required="true">
+                          <option value="">请选择</option>
+                          <option value="1">AND</option>
+                          <option value="2">OR</option>
+                        </select>
+                      </div>
+                    </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <div class="rule_left">
+                      <select ng-model="vm.factField" class="form-control valid" data-rule-required="true" ng-options="s.name as s.displayName for s in fields" ng-change="getNewSheetsList(vm.factField,vm)">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                    <div class="rule_left rule_weight_drop">
+                      <select ng-model="vm.matchPattern" class="form-control valid" data-rule-required="true" name="name1{{$index}}" ng-options="s.code as s.value for s in vm.sheetTypes">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                    <div class="rule_left rule_weight_drop">
+                      <select ng-model="vm.matchField" class="form-control valid" data-rule-required="true">
+                        <option value="">请选择</option>
+                        <option ng-repeat="s in fields track by $index" value="{{s.name}}" ng-selected="s.name==vm.matchField">{{s.displayName}}</option>
+                        <option value="99999999" ng-selected="vm.matchField=='99999999'">其它</option>
+                      </select>
+                    </div>
+                    <div class="rule_left rule_weight_drop">
+                      <input type="text" class="form-control valid" ng-model="vm.matchFieldOther" ng-if="vm.matchField==99999999">
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
+                    <button class="btn" type="button" ng-click="deleteFilter(item.conditionConfigBean.templateConfig.configData.conditionsMap.list, $index)">删除</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group"></div>
+              <div class="form-group">
+                <label class="radio-inline checks float_left sub-title">
+                  操作配置
+                </label>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label">
+                  <button class="btn" type="button" ng-click="addOperate(item.operationConfigList, $index)"><i class="fa fa-plus m-r-xs"></i>新增操作</button>
+                </label>
+              </div>
+
+              <div class="rule_left" ng-show="item.operationConfigList.length>0">
+                <label class="col-sm-2 control-label">
+                  <div class="rule_weight_drop w-xs">
+                    设置:
+                  </div>
+                </label>
+              </div>
+
+              <div style="float:left;width:1005px">
+                <div class="form-group" ng-repeat="vm in item.operationConfigList track by $index">
+                  <div class="col-sm-8">
+                    <div class="rule_left">
+                      <select ng-model="vm.sheetId" class="form-control valid" data-rule-required="true" ng-options="s.id as s.name for s in sheets">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                    <div class="rule_left rule_weight_drop">
+                      <select ng-model="vm.operator" ng-options="s.code as s.value for s in operatorTypes" class="form-control valid ">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                    <div class="rule_left rule_weight_drop">
+                      <select ng-model="vm.value" class="form-control valid" data-rule-required="true" ng-options="s.name as s.displayName for s in fields">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
+                    <button class="btn" type="button" ng-click="deleteOperate(item.operationConfigList, $index)">删除</button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group"></div>
+              <div class="modal-footer" permission indata="loginAuthData" btndesc="rule:modify">
+                <button class="btn btn-success" btn-loading="saveloading" loading-text="保存中..." type="button" ng-click="submitForm(item, $index)">保存</button>
+                <button class="btn btn-default" type="button" ng-click="showItem(item,$index,'cancel')">取消</button>
+              </div>
+
+            </div>
+            <!--自定义名单 222 模板2-->
+            <div class="modal-body" ng-if="item.templateId==2">
+
+              <div class="rule_wrapper">
+
+                <div class="form-group">
+                  <label class="radio-inline checks float_left sub-title">
+                    属性配置
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">配置权重 ：</label>
+                  <div class="col-sm-8">
+                    <div class="rule_weight" ng-if="vm.patternCode==2">
+                      <input name="attributeConfig" class="form-control valid" ng-model="item.attributeConfig" data-rule-required="true" />
+                      <input name="relation" class="form-control hide" ng-model="item.conditionConfigBean.relation" />
+                      <input name="strategyId" class="form-control hide" ng-model="item.strategyId" />
+                    </div>
+                    <div class="rule_weight" ng-if="vm.patternCode==1||vm.patternCode==3">
+                      <select name="timeSliceUnitCode" ng-model="item.attributeConfig"  class="form-control valid" data-rule-required="true" ng-options="s.value as s.value for s in attributeConfigList">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="radio-inline checks float_left sub-title">
+                    条件配置
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">描述 ：</label>
+                  <div class="col-sm-8">
+                    <input name="desc" class="form-control valid" ng-model="item.conditionConfigBean.templateConfig.configData.desc" data-rule-required="true" placeholder=""/>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">匹配字段：</label>
+                  <div class="col-sm-6">
+                    <select ng-model="item.conditionConfigBean.templateConfig.configData.matchField" name="matchFields" class="form-control valid" data-rule-required="true" ng-options="s.name as s.displayName for s in fields">
+                      <option value="">请选择</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-3">
+                    <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                       popover="匹配字段：要匹配的字段" popover-placement="right"
+                       popover-trigger="mouseenter" popover-title="匹配字段：" popover-append-to-body="true"></i>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">自定义列表：</label>
+                  <div class="col-sm-6">
+                    <select ng-model="item.conditionConfigBean.templateConfig.configData.sheetId" name="sheetIds" class="form-control valid" data-rule-required="true" ng-options="s.id as s.name for s in sheets">
+                      <option value="">请选择</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-3">
+                    <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                       popover="自定义列表：自定义列表是用户在自己的自定义列表中自主增加的名单类别" popover-placement="right"
+                       popover-trigger="mouseenter" popover-title="自定义列表：" popover-append-to-body="true"></i>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">匹配模式：</label>
+                  <div class="col-sm-6">
+                    <select ng-model="item.conditionConfigBean.templateConfig.configData.matchPattern" name="matchPattern1" class="form-control valid" data-rule-required="true" ng-options="s.code as s.value for s in sheetTypes">
+                      <option value="">请选择</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-3">
+                    <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                       popover="匹配模式：
+                      匹配模式" popover-placement="right"
+                       popover-trigger="mouseenter" popover-title="
+                    匹配模式：" popover-append-to-body="true"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group"></div>
+              <div class="form-group">
+                <label class="radio-inline checks float_left sub-title">
+                  操作配置
+                </label>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label">
+                  <button class="btn" type="button" ng-click="addOperate(item.operationConfigList, $index)"><i class="fa fa-plus m-r-xs"></i>新增操作</button>
+                </label>
+              </div>
+
+              <div class="rule_left" ng-show="item.operationConfigList.length>0">
+                <label class="col-sm-2 control-label">
+                  <div class="rule_weight_drop w-xs">
+                    设置:
+                  </div>
+                </label>
+              </div>
+
+              <div style="float:left;width:1005px">
+                <div class="form-group" ng-repeat="vm in item.operationConfigList track by $index">
+                  <div class="col-sm-8">
+                    <div class="rule_left">
+                      <select ng-model="vm.sheetId" class="form-control valid" data-rule-required="true" ng-options="s.id as s.name for s in operatorSheets">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                    <div class="rule_left rule_weight_drop">
+                      <select ng-model="vm.operator" ng-options="s.code as s.value for s in operatorTypes" class="form-control valid ">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                    <div class="rule_left rule_weight_drop">
+                      <select ng-model="vm.value" class="form-control valid" data-rule-required="true" ng-options="s.name as s.displayName for s in fields">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
+                    <button class="btn" type="button" ng-click="deleteOperate(item.operationConfigList, $index)">删除</button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group"></div>
+              <div class="modal-footer" permission indata="loginAuthData" btndesc="rule:modify">
+                <button class="btn btn-success" btn-loading="saveloading" loading-text="保存中..." type="button" ng-click="submitForm(item, $index)">保存</button>
+                <button class="btn btn-default" type="button" ng-click="showItem(item,$index,'cancel')">取消</button>
+              </div>
+
+            </div>
+            <!--自定义规则 333 模板3-->
+            <div class="modal-body" ng-if="item.templateId==3">
+
+              <div class="rule_wrapper">
+
+                <div class="form-group">
+                  <label class="radio-inline checks float_left sub-title">
+                    属性配置
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">配置权重 ：</label>
+                  <div class="col-sm-8">
+                    <div class="rule_weight" ng-if="vm.patternCode==2">
+                      <input name="attributeConfig" class="form-control valid" ng-model="item.attributeConfig" data-rule-required="true" />
+                      <input name="relation" class="form-control hide" ng-model="item.conditionConfigBean.relation" />
+                      <input name="strategyId" class="form-control hide" ng-model="item.strategyId" />
+                    </div>
+                    <div class="rule_weight" ng-if="vm.patternCode==1||vm.patternCode==3">
+                      <select name="timeSliceUnitCode" ng-model="item.attributeConfig"  class="form-control valid" data-rule-required="true" ng-options="s.value as s.value for s in attributeConfigList">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="radio-inline checks float_left sub-title">
+                    条件配置
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label must">执行条件 ：</label>
+                  <div class="col-sm-9">
+                    <div class="col-sm-4 no-padder">
+                      <label class="radio-inline">
+                        <input type="radio" value="1" name="relation" ng-model="item.conditionConfigBean.relation" class="valid"> 满足以下所有条件
+                      </label>
+                    </div>
+                    <div class="col-sm-4 no-padder">
+                      <label class="radio-inline">
+                        <input type="radio" value="2" name="relation" ng-model="item.conditionConfigBean.relation" class="valid"> 满足以下任意条件
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 自定义头部 添加条件 添加条件组 -->
+
+                <div class="user_defined_top">
+
+                  <!-- 多条 -->
+                  <div  style="width:1060px" ng-repeat="vm in item.conditionConfigBean.conditionList track by $index" ng-if="vm.conditionList.length>0&&vm.conditionList[0].templateConfig.springBeanRule=='many'" ng-init="outIndex=$index">
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">
+                        <button class="btn" type="button" ng-click="addFilter_many(vm.conditionList, $index)"><i class="fa fa-plus m-r-xs"></i>添加过滤条件</button>
+                      </label>
+                    </div>
+
+                    <div style="float:left;width:1005px">
+                      <div class="form-group" ng-repeat="am in vm.conditionList track by $index">
+                        <div class="rule_left col-sm-2">
+                          <label class="col-sm-2" ng-if="$index==0">
+                            <div class="rule_weight_drop w-xs">
+                              <select ng-model="vm.relation" class="form-control valid" data-rule-required="true">
+                                <option value="">请选择</option>
+                                <option value="1">AND</option>
+                                <option value="2">OR</option>
+                              </select>
+                            </div>
+                          </label>
+                        </div>
+                        <div class="col-sm-10">
+                          <div class="rule_left">
+                            <select ng-model="am.templateConfig.configData.factField" class="form-control valid" data-rule-required="true" ng-options="s.name as s.displayName for s in fields" ng-change="getNewSheetsList(am.templateConfig.configData.factField,am.templateConfig.configData)">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                          <div class="rule_left rule_weight_drop">
+                            <select ng-model="am.templateConfig.configData.matchPattern" class="form-control valid" data-rule-required="true" ng-options="s.code as s.value for s in am.templateConfig.configData.sheetTypes">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                          <div class="rule_left rule_weight_drop">
+                            <select ng-model="am.templateConfig.configData.matchField" class="form-control valid" data-rule-required="true">
+                              <option value="">请选择</option>
+                              <option ng-repeat="s in fields track by $index" value="{{s.name}}" ng-selected="am.templateConfig.configData.matchField==s.name">{{s.displayName}}</option>
+                              <option value="99999999" ng-selected="am.templateConfig.configData.matchField==99999999">其它</option>
+                            </select>
+                          </div>
+                          <div class="rule_left rule_weight_drop">
+                            <input type="text" class="form-control valid" ng-model="am.templateConfig.configData.matchFieldOther" ng-if="am.templateConfig.configData.matchField==99999999">
+                          </div>
+                          <div class="rule_left rule_weight_drop">
+                            <button class="btn" type="button" ng-click="deleteFilter_many(vm.conditionList, $index,item.conditionConfigBean.conditionList,outIndex)">删除</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="line line-dashed line-lg pull-in"></div>
+                    </div>
+                  </div>
+
+                  <div class="form-group" style="margin:20px 0"></div>
+
+                  <!-- 单条 -->
+                  <div class="user_defined_single" ng-repeat="vm in item.conditionConfigBean.conditionList track by $index" ng-if="vm.templateConfig.springBeanRule=='single'" style="float:left;width:1005px;">
+                    <div class="form-group">
+                      <div class="rule_left col-sm-2"></div>
+                      <div class="col-sm-10">
+                        <div class="rule_left">
+                          <select ng-model="vm.templateConfig.configData.factField" class="form-control valid" data-rule-required="true" ng-options="s.name as s.displayName for s in fields" ng-change="getNewSheetsList(vm.templateConfig.configData.factField,vm.templateConfig.configData)">
+                            <option value="">请选择</option>
+                          </select>
+                        </div>
+                        <div class="rule_left rule_weight_drop">
+                          <select ng-model="vm.templateConfig.configData.matchPattern" class="form-control valid" data-rule-required="true" ng-options="s.code as s.value for s in vm.templateConfig.configData.sheetTypes">
+                            <option value="">请选择</option>
+                          </select>
+                        </div>
+                        <div class="rule_left rule_weight_drop">
+                          <select ng-model="vm.templateConfig.configData.matchField" class="form-control valid" data-rule-required="true">
+                            <option value="">请选择</option>
+                            <option ng-repeat="s in fields track by $index" value="{{s.name}}" ng-selected="vm.templateConfig.configData.matchField==s.name">{{s.displayName}}</option>
+                            <option value="99999999" ng-selected="vm.templateConfig.configData.matchField==99999999">其它</option>
+                          </select>
+                        </div>
+                        <div class="rule_left rule_weight_drop">
+                          <input type="text" class="form-control valid" ng-model="vm.templateConfig.configData.matchFieldOther" ng-if="vm.templateConfig.configData.matchField==99999999">
+                        </div>
+                        <div class="rule_left rule_weight_drop">
+                          <button class="btn" type="button" ng-click="deleteFilter_single(item.conditionConfigBean.conditionList, $index)">删除</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="line line-dashed line-lg pull-in"></div>
+                  </div>
+
+                </div>
+
+
+
+                <!-- 自定义添加模板 频度统计  -->
+
+                <div style="width:1060px" ng-repeat="vm in item.conditionConfigBean.conditionList track by $index" ng-if="vm.templateConfig.springBeanRule=='statisticsRule'">
+
+                  <div class="rule_wrapper">
+
+                    <!-- <div class="form-group">
+                      <label class="radio-inline checks float_left">
+                        条件配置
+                      </label>
+                    </div> -->
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label must">描述 ：</label>
+                      <div class="col-sm-8">
+                        <input name="desc" class="form-control valid" ng-model="vm.templateConfig.configData.desc" data-rule-required="true" placeholder=""/>
+                      </div>
+                      <div class="col-sm-1">
+                        <button class="btn" type="button" ng-click="deleteFilter(item.conditionConfigBean.conditionList, $index)">删除</button>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label must">时间片 ：</label>
+                      <div class="col-sm-6">
+                        <div class="rule_weight">
+                          <input name="timeSlice" class="form-control valid" ng-model="vm.templateConfig.configData.timeSlice" data-rule-required="true" />
+                        </div>
+                        <div class="rule_weight rule_weight_drop">
+                          <select name="timeSliceUnitCode" ng-model="vm.templateConfig.configData.timeSliceUnitCode"  class="form-control valid" data-rule-required="true" ng-options="s.code as s.value for s in timeUnits">
+                            <option value="">请选择</option>
+                          </select>
+                        </div>
+                        <span class="rule_weight_text">统计不包含当前事件</span>
+                      </div>
+                      <div class="col-sm-3">
+                        <i class="fa fa-question-circle m-l-sm  pointer rule_pointer" popover="规则计算的时间范围，如1个月则表示基于当前时间往前追溯1个月" popover-placement="right" popover-trigger="mouseenter" popover-title="时间片：" popover-append-to-body="true"></i>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label must">主属性：</label>
+                      <div class="col-sm-6">
+                        <select name="masterAttr" ng-model="vm.templateConfig.configData.masterAttr" ng-options="s.name as s.displayName for s in fields" class="form-control valid w300" data-rule-required="true" ng-change="getCalcList(vm.templateConfig.configData.masterAttr,vm.templateConfig.configData.slaverAttr,vm.templateConfig.configData)">
+                          <option value="">请选择</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3">
+                        <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                           popover="示例:
+                          1) 主属性为用户且从属性为空，表示用户出现的次数
+                          2) 主属性为用肿户且从属性为IP,表示在IP上出现次数或用户关联的IP个数" popover-placement="right"
+                           popover-trigger="mouseenter" popover-title="主属性：" popover-append-to-body="true"></i>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">从属性：</label>
+                      <div class="col-sm-6">
+                        <select name="slaverAttr" ng-model="vm.templateConfig.configData.slaverAttr" ng-options="s.name as s.displayName for s in fields" class="form-control valid w300" ng-change="getCalcList(vm.templateConfig.configData.masterAttr,vm.templateConfig.configData.slaverAttr,vm.templateConfig.configData)">
+                          <option value="">请选择</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3">
+                        <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                           popover="示例:
+                        依据选择的计算方式分为:
+                        1) 主属性在从属性出现的次数
+                        2) 主属性关联从属性的个数" popover-placement="right"
+                           popover-trigger="mouseenter" popover-title="从属性：" popover-append-to-body="true"></i>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label must">计算方式：</label>
+                      <div class="col-sm-6">
+                        <select name="calcTypeCode" ng-model="vm.templateConfig.configData.calcTypeCode" ng-options="s.code as s.value for s in vm.templateConfig.configData.calcMethods" class="form-control valid w300" data-rule-required="true">
+                          <option value="">请选择</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3">
+                        <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                           popover="在主属性为用户，从属性为IP情况下:
+                        1) 求出现次数
+                        含义为用户在IP上出 现的次数
+                        2) 求关联个数
+                        含义为用户关联过的IP个数" popover-placement="right"
+                           popover-trigger="mouseenter" popover-title="
+                        计算方式 ：" popover-append-to-body="true"></i>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label must">比较：</label>
+                      <div class="col-sm-6">
+                        <select name="compareCode" ng-model="vm.templateConfig.configData.compareCode" class="form-control valid w300" data-rule-required="true" ng-options="s.code as s.value for s in compareCode">
+                          <option value="">请选择</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3">
+                        <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                           popover="常见的比较 运算符" popover-placement="right"
+                           popover-trigger="mouseenter" popover-title="
+                        比较 ：" popover-append-to-body="true"></i>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label must">阀值：</label>
+                      <div class="col-sm-6">
+                        <input name="threshold" class="form-control valid" ng-model="vm.templateConfig.configData.threshold" data-rule-required="true"/>
+                      </div>
+                      <div class="col-sm-3">
+                        <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                           popover="当某个条件达到一定的程度，用于与该阈值比较" popover-placement="right"
+                           popover-trigger="mouseenter" popover-title="
+                        阀值 ：" popover-append-to-body="true"></i>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label must">作用域：</label>
+                      <div class="col-sm-6">
+                        <select name="scopeEventCode" ng-model="vm.templateConfig.configData.scopeEventCode" class="form-control valid w300" data-rule-required="true" ng-options="s.code as s.value for s in eventCode">
+                          <option value="">请选择</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3">
+                        <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                           popover="规则计算的数据范围，按范围从小到大依次为本应用、全局。" popover-placement="right"
+                           popover-trigger="mouseenter" popover-title="
+                        作用域 ：" popover-append-to-body="true"></i>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label must"></label>
+                      <div class="col-sm-6">
+                        <select name="scopeApplicationCode" ng-model="vm.templateConfig.configData.scopeApplicationCode" class="form-control valid w300" data-rule-required="true" ng-options="s.code as s.value for s in applicationCode">
+                          <option value="">请选择</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3">
+                        <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                           popover="命中条件后,结果干预时间内，再次访问会直接返回设定的风险结果" popover-placement="right"
+                           popover-trigger="mouseenter" popover-title="
+                        结果干预时间 ：" popover-append-to-body="true"></i>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label must">结果干预时间 ：</label>
+                      <div class="col-sm-6">
+                        <div class="rule_weight">
+                          <input name="deadTime" class="form-control valid" ng-model="vm.templateConfig.configData.deadTime" data-rule-required="true" />
+                        </div>
+                        <div class="rule_weight rule_weight_drop">
+                          <select name="deadTimeUnitCode" ng-model="vm.templateConfig.configData.deadTimeUnitCode"  class="form-control valid" data-rule-required="true" ng-options="s.code as s.value for s in timeUnits">
+                            <option value="">请选择</option>
+                          </select>
+                        </div>
+                        <span class="rule_weight_text">统计不包含当前事件</span>
+                      </div>
+                      <div class="col-sm-3">
+                        <i class="fa fa-question-circle m-l-sm  pointer rule_pointer" popover="规则计算的时间范围，如1个月则表示基于当前时间往前追溯1个月" popover-placement="right" popover-trigger="mouseenter" popover-title="时间片：" popover-append-to-body="true"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                      <button class="btn" type="button" ng-click="addFilter(vm.templateConfig.configData.conditionsMap.list, $index)"><i class="fa fa-plus m-r-xs"></i>添加过滤条件</button>
+                    </label>
+                  </div>
+
+                  <div style="float:left;width:1005px">
+                    <div class="form-group" ng-repeat="am in vm.templateConfig.configData.conditionsMap.list track by $index">
+                      <div class="rule_left col-sm-2">
+                        <label class="col-sm-2" ng-if="$index==0">
+                          <div class="rule_weight_drop w-xs">
+                            <select ng-model="vm.templateConfig.configData.conditionsMap.relation" class="form-control valid" data-rule-required="true">
+                              <option value="">请选择</option>
+                              <option value="1">AND</option>
+                              <option value="2">OR</option>
+                            </select>
+                          </div>
+                        </label>
+                      </div>
+                      <div class="col-sm-9">
+                        <div class="rule_left">
+                          <select ng-model="am.factField" class="form-control valid" data-rule-required="true" ng-options="s.name as s.displayName for s in fields" ng-change="getNewSheetsList(am.factField,am)">
+                            <option value="">请选择</option>
+                            <option ng-repeat="itm in fields track by $index" value="{{itm.name}}">{{itm.displayName}}</option>
+                          </select>
+                        </div>
+                        <div class="rule_left rule_weight_drop">
+                          <select ng-model="am.matchPattern" class="form-control valid" data-rule-required="true" ng-options="s.code as s.value for s in am.sheetTypes">
+                            <option value="">请选择</option>
+                          </select>
+                        </div>
+                        <div class="rule_left rule_weight_drop">
+                          <select ng-model="am.matchField" class="form-control valid" data-rule-required="true">
+                            <option value="">请选择</option>
+                            <option ng-repeat="s in fields track by $index" value="{{s.name}}" ng-selected="s.name==am.matchField">{{s.displayName}}</option>
+                            <option value="99999999" ng-selected="am.matchField=='99999999'">其它</option>
+                          </select>
+                        </div>
+                        <div class="rule_left rule_weight_drop">
+                          <input type="text" class="form-control valid" ng-model="am.matchFieldOther" ng-if="am.matchField==99999999">
+                        </div>
+                      </div>
+                      <div class="col-sm-1">
+                        <button class="btn" type="button" ng-click="deleteFilter(vm.templateConfig.configData.conditionsMap.list, $index)">删除</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="line line-dashed line-lg pull-in"></div>
+                </div>
+
+                <div class="form-group" style="margin:20px 0"></div>
+
+                <!-- 自定义添加模板 名单规则  -->
+                <div style="width:1060px" ng-repeat="vm in item.conditionConfigBean.conditionList track by $index" ng-if="vm.templateConfig.springBeanRule=='sheetRule'">
+
+                  <div class="form-group">
+                    <label class="radio-inline checks float_left sub-title">
+                      条件配置
+                    </label>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label must">描述 ：</label>
+                    <div class="col-sm-8">
+                      <input name="desc" class="form-control valid" ng-model="vm.templateConfig.configData.desc" data-rule-required="true" placeholder=""/>
+                    </div>
+                    <div class="col-sm-1">
+                      <button class="btn" type="button" ng-click="deleteFilter(item.conditionConfigBean.conditionList, $index)">删除</button>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label must">匹配字段：</label>
+                    <div class="col-sm-6">
+                      <select ng-model="vm.templateConfig.configData.matchField" class="form-control valid" data-rule-required="true" ng-options="s.name as s.displayName for s in fields">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-3">
+                      <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                         popover="匹配字段：<br>
+                        要匹配的字段" popover-placement="right"
+                         popover-trigger="mouseenter" popover-title="匹配字段：" popover-append-to-body="true"></i>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label must">自定义列表：</label>
+                    <div class="col-sm-6">
+                      <select ng-model="vm.templateConfig.configData.sheetId" class="form-control valid" data-rule-required="true" ng-options="s.id as s.name for s in sheets">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-3">
+                      <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                         popover="自定义列表：<br>
+                        自定义列表是用户在自己的自定义列表中自主增加的名单类别" popover-placement="right"
+                         popover-trigger="mouseenter" popover-title="自定义列表：" popover-append-to-body="true"></i>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label must">匹配模式：</label>
+                    <div class="col-sm-6">
+                      <select ng-model="vm.templateConfig.configData.matchPattern" class="form-control valid" data-rule-required="true" ng-options="s.code as s.value for s in sheetTypes">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-3">
+                      <i class="fa fa-question-circle m-l-sm  pointer rule_pointer"
+                         popover="匹配模式：
+                        匹配模式" popover-placement="right"
+                         popover-trigger="mouseenter" popover-title="
+                      匹配模式：" popover-append-to-body="true"></i>
+                    </div>
+                  </div>
+                  <div class="line line-dashed line-lg pull-in"></div>
+                </div>
+
+                <div class="form-group" style="margin:20px 0"></div>
+
+              </div>
+
+
+              <div class="form-group">
+                <label class="col-sm-5 control-label">
+                  <button class="btn" type="button" ng-click="addTemplet2(item,'inaddtmp')"><i class="fa fa-plus m-r-xs"></i>添加模板</button>
+                  <button class="btn" type="button" ng-click="add_defined_single(item,'single')"><i class="fa fa-plus m-r-xs"></i>添加单条件</button>
+                  <button class="btn" type="button" ng-click="add_defined_many(item,'many')"><i class="fa fa-plus m-r-xs"></i>添加条组件</button>
+              </div>
+              <div class="form-group"></div>
+              <div class="form-group">
+                <label class="radio-inline checks float_left sub-title">
+                  操作配置
+                </label>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label">
+                  <button class="btn" type="button" ng-click="addOperate(item.operationConfigList, $index)"><i class="fa fa-plus m-r-xs"></i>新增操作</button>
+                </label>
+              </div>
+
+              <div class="rule_left" ng-show="item.operationConfigList.length>0">
+                <label class="col-sm-2 control-label">
+                  <div class="rule_weight_drop w-xs">
+                    设置:
+                  </div>
+                </label>
+              </div>
+
+              <div style="float:left;width:800px">
+                <div class="form-group" ng-repeat="vm in item.operationConfigList track by $index">
+                  <div class="col-sm-8">
+                    <div class="rule_left">
+                      <select ng-model="vm.sheetId" class="form-control valid" data-rule-required="true" ng-options="s.id as s.name for s in sheets">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                    <div class="rule_left rule_weight_drop">
+                      <select ng-model="vm.operator" ng-options="s.code as s.value for s in operatorTypes" class="form-control valid ">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                    <div class="rule_left rule_weight_drop">
+                      <select ng-model="vm.value" class="form-control valid" data-rule-required="true" ng-options="s.name as s.displayName for s in fields">
+                        <option value="">请选择</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
+                    <button class="btn" type="button" ng-click="deleteOperate(item.operationConfigList, $index)">删除</button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group"></div>
+              <div class="modal-footer" permission indata="loginAuthData" btndesc="rule:modify">
+                <button class="btn btn-success" btn-loading="saveloading" loading-text="保存中..." type="button" ng-click="submitForm(item, $index)">保存</button>
+                <button class="btn btn-default" type="button" ng-click="showItem(item,$index,'cancel')">取消</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

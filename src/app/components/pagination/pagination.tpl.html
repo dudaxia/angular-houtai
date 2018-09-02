@@ -1,0 +1,42 @@
+<ul class="pagination pagination-new">
+    <li ng-class="{'disabled':pageIndex <= 1}" title="上一页">
+        <a ng-click="clickPrevPage()"> <i class="fa fa-caret-left" aria-hidden="true"></i>
+        </a>
+    </li>
+    <li ng-class="{'active':pageIndex == 1}" ng-show="pageStart!=1">
+        <a ng-click="clickFirstPage()">1</a>
+    </li>
+    <li class="disabled" ng-show="pageStart>
+        2">
+        <span>...</span>
+    </li>
+    <li ng-class="{'active':pageIndex == page.page}" ng-repeat="page in pages track by $index">
+        <a ng-click="clickGoToPage(page.page)">{{page.page}}</a>
+    </li>
+    <li class="disabled" ng-show="pageEnd<(pageCnt-1)">
+        <span>...</span>
+    </li>
+    <li ng-class="{'active':pageIndex == pageCnt}" ng-show="pageEnd!=pageCnt">
+        <a ng-click="clickLastPage()">{{pageCnt}}</a>
+    </li>
+    <li ng-class="{'disabled':pageIndex >= pageCnt}" title="下一页">
+        <a ng-click="clickNextPage()"> <i class="fa fa-caret-right" aria-hidden="true"></i>
+        </a>
+    </li>
+    <li class="goto" ng-if="showGotoPage">
+
+        <span style="width:90px;">
+
+            <form ng-submit="clickGoToPage(gotoPage)">
+
+                <div class="input-group">
+                    <input type="text" class="input-sm form-control" name="goToPage" ng-model="gotoPage" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" onpaste="return false;"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-sm btn-primary" title="跳转">Go</button>
+                    </span>
+                </div>
+            </form>
+        </span>
+    </li>
+
+</ul>

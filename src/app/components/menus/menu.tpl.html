@@ -1,0 +1,54 @@
+<div class="menus-nav">
+    <ul class="nav-menu-new nav-new-top">
+        
+        <!-- 纵向导航菜单  -->
+        <li  ng-repeat="value in $root.subMenu track by value.id" ng-class="{isopen:currentMenu.firstMenu==value.id&&currentMenu.firstOpened}">    
+            <a  ng-class="{active:value.id==currentMenu.firstMenu,nosub:value.child.length==0}" class="auto" title="{{value.name}}" ng-click="onClickItem(value.id,value)">                
+                <i class="menu-logo pull-left fa-fw" ng-style="{'background-image':'url('+ value.showPic+')'}"></i>
+                <span >{{value.name}}</span>
+                <i class="fa icon pull-right" ng-class="{'fa-angle-down':currentMenu.firstMenu!=value.id||(currentMenu.firstMenu==value.id&&!currentMenu.firstOpened),'fa-angle-up':currentMenu.firstMenu==value.id&&currentMenu.firstOpened}" ng-if="value.child.length>0"></i> 
+                <i class="fa fa-long-arrow-right icon pull-right margin-t-3" ng-if="hasCenter&&value.name=='产品中心'"></i>
+            </a>
+            <ul class="nav-menu-new menu-sub" ng-if="value.child&&value.child.length>0"> 
+                <li ng-repeat="svalue in value.child track by svalue.id" ng-class="{isopen:currentMenu.firstMenu==value.id&&currentMenu.secMenu==svalue.id&&currentMenu.secOpened}">
+                    <a ng-click="onClickItem(svalue.id,svalue)" ng-class="{active:currentMenu.firstMenu==value.id&&currentMenu.secMenu==svalue.id,nosub:svalue.child.length==0}" class="auto" title="{{svalue.name}}">
+                        <span>{{svalue.name}}</span>
+                        <i class="fa icon pull-right" ng-class="{'fa-angle-down':currentMenu.secMenu!=svalue.id||(currentMenu.secMenu==svalue.id&&!currentMenu.secOpened),'fa-angle-up':currentMenu.secMenu==svalue.id&&currentMenu.secOpened}" ng-if="svalue.child.length>0"></i>
+                    </a>
+                    <!-- {{ currentMenu.firstMenu + '__' + value.id + '__' + currentMenu.secMenu + '__' +  svalue.id  + '__' + currentMenu.secOpened }} -->
+                    <ul class="nav-menu-new menu-sub-third" ng-if="svalue.child.length>0">
+                        <li ng-repeat="nvalue in svalue.child track by nvalue.id">
+                            <a ng-click="onClickItem(nvalue.id,nvalue)" ng-class="{active:currentMenu.firstMenu==value.id&&currentMenu.secMenu==svalue.id&&currentMenu.thirdMenu==nvalue.id}" class="auto" title="{{nsvalue.name}}">
+                                <span>{{nvalue.name}}</span> 
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+        <!-- 横向导航菜单  -->
+        <!-- <li ng-if="layout == 2 && currentMenuId == value.id" ng-repeat="value in $root.subMenu track by value.id" class="isopen">    
+                <a  ng-class="{active:value.id==currentMenu.firstMenu, nosub:value.child.length==0}" class="auto" title="{{value.name}}" ng-click="onClickItem(value.id,value)">                
+                    <i class="menu-logo pull-left fa-fw" ng-style="{'background-image':'url('+value.showPic+')'}"></i>
+                    <span >{{value.name}}</span>
+                    <i class="fa fa-long-arrow-right icon pull-right margin-t-3" ng-if="hasCenter&&value.name=='产品中心'"></i>
+                </a>
+                <ul class="nav-menu-new menu-sub" ng-if="value.child&&value.child.length>0"> 
+                    <li ng-repeat="svalue in value.child track by svalue.id"  ng-class="{isopen:currentMenu.firstMenu==value.id&&currentMenu.secMenu==svalue.id&&currentMenu.secOpened}">
+                        <a ng-click="onClickItem(svalue.id,svalue)" ng-class="{active:currentMenu.firstMenu==value.id&&currentMenu.secMenu==svalue.id,nosub:svalue.child.length==0}" class="auto" title="{{svalue.name}}">
+                            <span>{{svalue.name + '_' + svalue.id}}</span>
+                            <i class="fa icon pull-right" ng-class="{'fa-angle-down':currentMenu.secMenu!=svalue.id||(currentMenu.secMenu==svalue.id&&!currentMenu.secOpened),'fa-angle-up':currentMenu.secMenu==svalue.id&&currentMenu.secOpened}" ng-if="svalue.child.length>0"></i>
+                        </a>
+                        <ul class="nav-menu-new menu-sub-third" ng-if="svalue.child.length>0">
+                            <li ng-repeat="nvalue in svalue.child track by nvalue.id">
+                                <a ng-click="onClickItem(nvalue.id,nvalue)" ng-class="{active:currentMenu.firstMenu==value.id&&currentMenu.secMenu==svalue.id&&currentMenu.thirdMenu==nvalue.id}" class="auto" title="{{nsvalue.name}}">
+                                    <span>{{nvalue.name}}</span> 
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+        </li>  -->
+    </ul>
+</div>

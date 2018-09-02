@@ -1,0 +1,98 @@
+<form form-validator  formvalidatorconfig="listEdit" method="post" class="form-horizontal">
+  <style>
+    .clearfix:after{
+      content: "";
+      height: 0;
+      overflow: hidden;
+      clear: both;
+    }
+    .slider{
+      margin-top: 20px;
+    }
+    .slider ul li{
+      position: relative;
+      width: 70px;
+      height:23px;
+      float: left;
+      list-style-type:none;
+    }
+    .yuan{
+      border-radius: 100%;
+      width: 20px;
+      height:20px;
+      border:3px #00a2d4 solid;
+      position: absolute;
+      top:0;
+    }
+    .number{
+      position: absolute;
+      left: 20px;
+      top: -20px;
+      color:#b6b6b6;
+    }
+    .xian{
+      position: absolute;
+      width: 50px;
+      height:2px;
+      background: #b6b6b6;
+      left: 20px;
+      top:50%;
+      transform: translate(0,-50%);
+    }
+    .clearfix_padd{
+      padding: 0;
+    }
+    .rank_text{
+    margin-left: 30px;
+    }
+    .rank_text input{
+      width: 35px;
+      margin-left: 35px;
+    }
+    .hd-title {
+      font-size: 16px;
+      line-height: 30px;
+      border-bottom: 1px solid #e4e4e4;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
+    .modal-body {
+      padding: 20px 30px;
+    }
+    .red{
+      color: #FF0000;
+    }
+  </style>
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" class="pull-right">&times;</button>
+    <h4 class="modal-title">选择内置模板</h4>
+  </div>
+  
+  <div class="modal-body ng-scope" ng-if="!pageLoading">
+    <div class="form-group">
+      <label class="col-sm-3 control-label must">模板类型:</label>
+      <div class="col-sm-3">
+        <select name="menuGroup" style="width:180px" ng-options="menuGroup.id as menuGroup.name for menuGroup in menuGroupList" 
+          class="form-control ng-pristine ng-valid" data-rule-required="true" aria-required="true" 
+          ng-change="" ng-model="entity.style">
+          <option value="" class=""></option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label must">模板名称:</label>
+      <div class="col-sm-3">
+        <select name="oneMenu" style="width:180px" ng-options="menu.id as menu.name for menu in menuList" 
+        class="form-control ng-pristine ng-valid" data-rule-required="true" aria-required="true" 
+        ng-model="entity.name">
+        <option value="" class=""></option>
+      </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-success" btn-loading="saveloading" loading-text="保存中..." type="submit">保存</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">取消</button>
+  </div>
+</form>

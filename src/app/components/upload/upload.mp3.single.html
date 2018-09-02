@@ -1,0 +1,26 @@
+<div class="uploadify-queue ">
+    <div id="upload{{$index}}" class="uploadify-queue-item" ng-repeat="f in files">
+        <div ng-if="f.fileProgress<100">
+            <p class="m-r-xs inline">{{f.name}}</p><span class="m-r-xs">({{f.size|formatBytes}})</span><span class="m-r-xs">{{f.fileProgress}}%</span>
+            <div class="uploadify-progress">
+                <div class="uploadify-progress-bar" style="width: {{f.fileProgress}}%;"> </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ul class="list-unstyled list-inline upload-list ">
+    <li ng-click="selectIndexFun($index)" ng-class="{'index':$index==selectIndex}" ng-repeat="f in fileList" style="margin-top:6px">
+        <a href="javascript:;" class="close m-l-sm" ng-click="del($index)"  ng-show="!hide"><i class="fa fa-times-circle"></i></a>
+         <!-- <fresco-img-mj  href="http://www.miaowmusic.com/mp3/Miaow-02-Hidden.mp3"></fresco-img-mj> -->
+        <muplayer-music  files="f"></muplayer-music>
+    </li>
+    
+    <li class="add" ng-show="maxCount>fileList.length&&!fileUploadLoading" ng-file-select ng-model="files" class="drop-box" drag-over-class="dragover" allow-dir="true" accept="audio/*">
+        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-plus" btn-loading="fileUploadLoading" loading-text="上传中..."></i>上传音乐</button>
+    </li>
+    
+    <li class="add" ng-show="maxCount>fileList.length" ng-if="fileUploadLoading">
+        <button type="button" class="btn btn-default btn-sm"  btn-loading="fileUploadLoading" loading-text="上传中..."><i class="fa fa-plus"></i>上传音乐</button>
+    </li>    
+    <span class="help-block">（保证浏览网页的加载速度，上传音乐最大为{{maxSizeFile}}M）</span>
+</ul>

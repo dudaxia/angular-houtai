@@ -1,0 +1,29 @@
+<div class="dropdown" dropdown is-open="dropdownStatusOpen">
+    <a class="dropdown-toggle datetimepickerdropdown" dropdown-toggle href="javascript:;">
+        <div class="input-group" title="{{address.string}}">
+            <input type="text" class="form-control" readonly="readonly" placeholder="请选择省/市/区" ng-attr-data-rule-required="{{required?'true':'false'}}" data-ng-model="address.string" style="background-color:#fff;"><span class="input-group-addon"><i class="caret"></i></span>
+        </div>
+    </a>
+    <ul class="dropdown-menu address address-con r-3x" ng-click="clickDropdown($event)">
+        <div class="address-tab m-b-sm wrapper-sm">
+            <a href="javascript:;" class="ng-class:{'active':selectType==1}" ng-click="selectChange(1,$event)">省</a>
+            <a href="javascript:;" class="ng-class:{'active':selectType==2}" ng-click="selectChange(2,$event)">市</a>
+            <a href="javascript:;" class="ng-class:{'active':selectType==3}" ng-click="selectChange(3,$event)">区</a>
+        </div>
+        <div class="row address-body" ng-if="selectType==1">
+            <div class="col-sm-3 address-list" ng-repeat="(key,value) in province" ng-click="provinceChange(key,$event)">
+                <div class="pointer"><span title="{{value}}" class="text-ellipsis ng-class:{' active':address.province==key}">{{value}}</span></div>
+            </div>
+        </div>
+        <div class="row address-body" ng-if="selectType==2">
+            <div class="col-sm-3 address-list" ng-repeat="(key,value) in citylist" ng-click="cityChange(key,$event)">
+                <div class="pointer"><span title="{{value}}"  class="text-ellipsis ng-class:{' active':address.city==key}">{{value}}</span></div>
+            </div>
+        </div>
+        <div class="row address-body" ng-if="selectType==3">
+            <div class="col-sm-3 address-list" ng-repeat="(key,value) in districtlist" ng-click="districtChange(key,$event)">
+                <div class="pointer"><span  title="{{value}}"  class="text-ellipsis ng-class:{' active':address.district==key}">{{value}}</span></div>
+            </div>
+        </div>
+    </ul>
+</div>

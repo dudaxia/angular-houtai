@@ -1,0 +1,11 @@
+<a class="close m-r-xs m-t-xs" ng-click="$hide()">&times;</a>
+<h3 class="popover-title">{{popupTitle||'操作选项'}}</h3>
+<div class="popover-content">
+    <ul class="popbox-menu  list-unstyled">
+        <li  ng-repeat="item in popupList" ng-class="{'divider':item.divider}">
+            <a ui-sref="{{item.href}}" ng-click="item.method&&$hide();item.method($el)" ng-if="!item.divider" >
+                <i class="fa fa-{{item.icon}} text-muted m-r-xs"></i>{{item.name}}
+            </a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,156 @@
+
+<style>
+  .m0-5 {
+    margin: 0 5px;
+  }
+
+  .mr5 {
+    margin-right: 5px;
+  }
+
+  tbody {
+    border-top: none !important;
+  }
+
+  .td-detail, .td-detail li {
+    margin: 0;
+    padding: 0;
+  }
+
+  .td-detail li {
+    float: left;
+    list-style: none;
+    margin-right: 20px;
+  }
+
+  .tr-gray {
+    background-color: #f8f8f8;
+    color: #333;
+  }
+  .table > tbody > tr > td, .table > tfoot > tr > td { vertical-align: middle;}
+
+</style>
+<section class="vbox">
+  <header class="header bg-white b-b clearfix">
+    <div class="m-t"></div>列表管理
+  </header>
+  <div class="section scrollable wrapper w-f m-b-md">
+    <ul class="nav nav-tabs">
+      <li ng-class="{active: curTab == 1}"><a ng-click="selectTab(1)" permission indata="loginAuthData" btndesc="sheet">列表定义</a></li>
+      <li ng-class="{active: curTab == 2}"><a ng-click="selectTab(2)" permission indata="loginAuthData" btndesc="sheetData">列表数据</a></li>
+    </ul>
+    <div ng-if="curTab == 1" class="panel panel-default border-top-none">
+      <div class="panel-body">
+        <div class="m-t-sm m-b form-inline" permission indata="loginAuthData" btndesc="sheet:add">
+          <a ng-click="addList(1)" btn-loading="saveloading" loading-text="新建中..." class="btn btn-sm btn-default m-r-sm">新建</a>
+        </div>
+        <div loading-container="tableParams.settings().$loading" class="table-responsive">
+          <div permission indata="loginAuthData" btndesc="sheet:list">
+            <table ng-table="tableParams" pager-target="#ng-pagination" class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>列表ID</th>
+                  <th>列表名称</th>
+                  <th>应用名</th>
+                  <th>列表类型</th>
+                  <th>描述</th>
+                  <th>创建者</th>
+                  <th>修改者</th>
+                  <th>上次修改时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="item in $data.recordList">
+                <tr>
+                  <td>{{item.id}}</td>
+                  <td title="{{item.name}}">{{item.name|showelepsis}}</td>
+                  <td title="{{item.applicationName}}">{{item.applicationName|showelepsis}}</td>
+                  <td title="{{item.typeName}}">{{item.typeName|showelepsis}}</td>
+                  <td title="{{item.desc}}">{{item.desc|showelepsis}}</td>
+                  <td>{{item.createUser}}</td>
+                  <td>{{item.updateUser}}</td>
+                  <td>{{item.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td>
+                    <a ng-click="addList(1,item)" class="text-href m-r" permission indata="loginAuthData" btndesc="sheet:modify">编辑</a>
+                    <a ng-click="deleteList(1,item.id)" class="text-href m-r" permission indata="loginAuthData" btndesc="sheet:delete">删除</a>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody ng-if="!tableParams.settings().$loading">
+                <tr class="text-center">
+                  <td colspan="10" ng-if="$data.length == 0">暂无数据</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-if="curTab == 2" class="panel panel-default border-top-none">
+      <div class="panel-body">
+        <form form-serialize="" method="post" table-params="tableParams2" class="table-search">
+          <div class="m-t-sm m-b form-inline">
+            请选择列表：
+            <select ng-model="searchParams.sheetId" ng-change="onSearch2()" ng-options="s.id as s.name for s in sheetdataList" class="form-control input-sm m-r">
+              <option value="">全部列表</option>
+            </select>
+            <div class="input-group input-group-sm m-r-sm">
+              <input type="text" name="keyword" ng-model="searchParams.keyword" placeholder="数据值" class="form-control"><span class="input-group-btn">
+                <button type="submit" title="搜索" class="btn btn-default"><i class="fa fa-search"></i></button></span>
+            </div>
+            <a ng-click="addList(2)" class="btn btn-sm btn-default m-r-sm" permission indata="loginAuthData" btndesc="sheetData:add">新建</a>
+            <a ng-click="import()" class="btn btn-sm btn-default m-r-sm" permission indata="loginAuthData" btndesc="sheetData:import">导入</a>
+          </div>
+        </form>
+        <div loading-container="tableParams2.settings().$loading" class="table-responsive">
+          <div permission indata="loginAuthData" btndesc="sheetData:list">
+            <table ng-table="tableParams2" pager-target="#ng-pagination2" class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>数据值</th>
+                  <th>列表</th>
+                  <th>应用名</th>
+                  <th>描述</th>
+                  <th>创建者</th>
+                  <th>修改者</th>
+                  <th>上次修改时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="item in $data.recordList">
+                <tr>
+                  <td title="{{item.value}}">{{ item.value|showelepsis }}</td>
+                  <td title="{{item.sheetName}}">{{ item.sheetName|showelepsis  }}</td>
+                  <td title="{{item.applicationName}}">{{ item.applicationName|showelepsis }}</td>
+                  <td title="{{item.desc}}">{{ item.desc|showelepsis }}</td>
+                  <td>{{ item.createUser}}</td>
+                  <td>{{ item.updateUser }}</td>
+                  <td>{{ item.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td>
+                    <a ng-click="addList(2,item)" class="text-href m-r" permission indata="loginAuthData" btndesc="sheetData:modify">编辑</a>
+                    <a ng-click="deleteList(2,item.id,item.value)" class="text-href" permission indata="loginAuthData" btndesc="sheetData:delete">删除</a>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody ng-if="!tableParams2.settings().$loading">
+                <tr class="text-center">
+                  <td colspan="10" ng-if="$data.length == 0">暂无数据</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer bg-white" fix-footer-ex="" fix-con-selector=".main-content" style="left: 200px;padding:2px 240px 0 10px;">
+    <div class="row text-center-xs">
+      <div class="col-md-5 hidden-sm">
+        <p ng-if="curTab == 1" class="text-muted m-t">总共{{ tableParams.total() }}条 当前为第{{ tableParams.page() }}页</p>
+        <p ng-if="curTab == 2" class="text-muted m-t">总共{{ tableParams2.total() }}条 当前为第{{ tableParams2.page() }}页</p>
+      </div>
+      <div ng-show="curTab == 1" id="ng-pagination" class="col-md-7 col-sm-12 text-right text-center-xs"></div>
+      <div ng-show="curTab == 2" id="ng-pagination2" class="col-md-7 col-sm-12 text-right text-center-xs"></div>
+    </div>
+  </footer>
+</section>

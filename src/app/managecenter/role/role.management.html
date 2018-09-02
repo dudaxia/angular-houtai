@@ -1,0 +1,90 @@
+
+<style>
+  .m0-5 {
+    margin: 0 5px;
+  }
+  .mr5 {
+    margin-right: 5px;
+  }
+  tbody {
+    border-top: none !important;
+  }
+  .td-detail, .td-detail li {
+    margin: 0;
+    padding: 0;
+  }
+  .td-detail li {
+    float: left;
+    list-style: none;
+    margin-right: 20px;
+  }
+  .tr-gray {
+    background-color: #f8f8f8;
+    color: #333;
+  }
+  .table > tbody > tr > td, .table > tfoot > tr > td { vertical-align: middle;}
+
+</style>
+<section class="vbox">
+  <header class="header bg-white b-b clearfix">
+    <div class="m-t"></div>角色列表
+  </header>
+  <div class="section scrollable wrapper w-f">
+      <div class="panel-body">
+        <div class="clearfix m-b">
+          <div class="input-group pull-left" style="width:200px;">
+              <input type="text" class="input-sm form-control" maxlength="50" placeholder="请输入角色名称" name="keyword" ng-model="vm.params.keywords"/>
+              <span class="input-group-btn">
+                  <button class="btn btn-sm btn-default" type="button" title="查询" ng-click="onSearch()">
+                      <i class="fa fa-search"></i>
+                  </button>
+              </span>
+          </div>
+          <div class="m-l-sm input-group pull-left" >
+            <a ng-click="addRole()" class="btn btn-sm btn-default m-r-sm" permission indata="loginAuthData" btndesc="role:add">新建角色</a>
+          </div>
+        </div>
+        <div loading-container="tableParams.settings().$loading" class="table-responsive m-b-md">
+          <div permission indata="loginAuthData" btndesc="role:list">
+            <table ng-table="tableParams" pager-target="#ng-pagination" class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>角色编号</th>
+                  <th>角色名称</th>
+                  <th>角色用户人数</th>
+                  <th>更新时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="item in $data.recordList track by $index">
+                <tr>
+                  <td>{{item.id}}</td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.userCount}}</td>
+                  <td>{{item.updateTime|msDateFormat:"YYYY-MM-DD"}}</td>
+                  <td ng-if="item.defaultAllApplication!=1">
+                    <a class="text-href m-r" href="javascript:;" ng-click="addRole(item)" permission indata="loginAuthData" btndesc="role:modify">编辑</a>
+                    <a class="text-href m-r" href="javascript:;" ng-click="deleteRole(item)" permission indata="loginAuthData" btndesc="role:delete">删除</a>
+                  </td>
+                  <td ng-if="item.defaultAllApplication==1">超级管理员不可编辑、删除</td>
+                </tr>
+              </tbody>
+              <tbody ng-if="!tableParams.settings().$loading">
+                <tr class="text-center">
+                  <td colspan="10" ng-if="$data.length == 0">暂无数据</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+  <footer class="footer bg-white" fix-footer-ex="" fix-con-selector=".main-content" style="left: 200px;padding:2px 240px 0 10px;">
+    <div class="row text-center-xs">
+      <div class="col-md-5 hidden-sm">
+        <p class="text-muted m-t">总共{{ tableParams.total() }}条 当前为第{{ tableParams.page() }}页</p>
+      </div>
+      <div id="ng-pagination" class="col-md-7 col-sm-12 text-right text-center-xs"></div>
+    </div>
+  </footer>
+</section>

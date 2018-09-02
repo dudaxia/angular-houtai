@@ -1,0 +1,9 @@
+<div class="modal-header dialog-header-wait" ng-if="header">
+    <h4 class="modal-title"> {{header}}</h4>
+</div>
+<div class="modal-body">
+    <p ng-bind-html="msg"></p>
+    <div class="progress progress-striped active">
+        <div class="progress-bar progress-bar-success" ng-style="getProgress()"></div><span class="sr-only">{{progress}}{{"DIALOGS_PERCENT_COMPLETE" | translate}}</span>
+    </div>
+</div>

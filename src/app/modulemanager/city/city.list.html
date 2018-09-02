@@ -1,0 +1,62 @@
+<section class="vbox">
+  <header class="header bg-white b-b clearfix">
+    <form class="talbe-search" form-serialize method="post" table-params="tableParams">
+      <div class="row m-t-sm">
+        <div class="col-sm-8 m-b-xs">
+            <span>城区管理</span>
+            <div class="btn-group  m-r-xs" dropdown>
+                <!-- <a class="btn btn-sm btn-default m-r-xs" title="新增城区" ng-click="addCity()"> <i class="fa fa-plus m-r-xs"></i>新增城区</a> -->
+            </div>
+        </div>
+        <!-- <div class="col-sm-4 m-b-xs">
+          <div class="input-group">
+              <input type="text" class="input-sm form-control" placeholder="组件名称" name="keyword" />
+              <span class="input-group-btn">
+                  <button class="btn btn-sm btn-default" type="submit" title="搜索">
+                      <i class="fa fa-search"></i>
+                  </button>
+              </span>
+          </div>
+        </div> -->
+      </div>
+    </form>
+  </header>
+  <div class="section scrollable wrapper w-f m-b-md">
+    <div class="table-responsive bg-white wrapper-sm">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>省份</th>
+            <th>城市</th>
+            <th>区</th>
+            <!-- <th>操作</th> -->
+          </tr>
+        </thead>
+        <tbody ng-repeat="item in cityList track by $index">
+          <tr>
+            <td>{{item.provinceArea}}</td>
+            <td>{{item.cityArea}}</td>
+            <td>{{item.countyArea}}</td>
+            <!-- <td>
+              <a ng-click="addList(1,item)" class="text-href m-r">编辑</a>
+              <a ng-click="deleteList(1,item.id)" class="text-href m-r">删除</a>
+            </td> -->
+          </tr>
+        </tbody>
+        <tbody ng-if="!cityList.length">
+          <tr class="text-center">
+            <td colspan="10" ng-if="$data.length == 0">暂无数据</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- <footer class="footer bg-white" fix-footer-ex="" fix-con-selector=".main-content" style="left: 200px;padding:2px 240px 0 10px;">
+    <div class="row text-center-xs">
+      <div class="col-md-5 hidden-sm">
+        <p class="text-muted m-t">总共{{ page.totalCnt }}条 当前为第{{ tableParams.pageIndex }}页</p>
+      </div>
+      <div wmo-pagination page-index="page.pageIndex" page-size="page.pageSize" total-cnt="page.totalCnt" on-page-index-changed="onPageIndexChanged()" style="margin:0;float:right;padding-top:8px;"></div>
+    </div>
+  </footer> -->
+</section>
