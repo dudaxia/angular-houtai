@@ -132,6 +132,7 @@ angular.module('ngTicket')
         host: {
             domain: 'ngthree.com',
             www: window.location.host,
+            apifix: 'http://sbgo.cc:8066',
             stc: 'stc.ngthree.com',
             api: '/api',
             api2: "/api2",

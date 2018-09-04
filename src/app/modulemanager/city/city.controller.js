@@ -11,9 +11,10 @@
     $scope.$on('reload', function () {
       $state.reload();
     })
-
     function getCityList() {
+      $scope.pageLoading = true;
       modulemanageServer.citylist().then(function(res){
+        $scope.pageLoading = false;
         $scope.cityList = res.res.data;
       })
     }

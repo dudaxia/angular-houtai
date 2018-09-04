@@ -11,14 +11,16 @@
     $scope.$on('reload', function () {
       $state.reload();
     })
-
+    $scope.pageLoading = true;
     $scope.addCompanyFun = function() {
       $scope.addCompany = true;
     }
 
     function getCompanyList() {
+      $scope.pageLoading = true;
       $rootScope.currentMenu = $rootScope.subMenu = [];
       organizationServer.getCompanyList().then(function(res){
+        $scope.pageLoading = false;
         var data = angular.copy(res.res.data);
         angular.forEach(data,function(item){
           var orgOuterItem = {

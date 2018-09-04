@@ -12,7 +12,7 @@
     $scope.$on('reload', function () {
       $state.reload();
     })
-
+    $scope.pageLoading = true;
     $scope.page={
         pageIndex:1,    //当前页索引。
         pageSize:20,    //单页记录条数
@@ -27,11 +27,13 @@
     };
 
     function getAddressList() {
+      $scope.pageLoading = true;
       var param = {
         PageNow: $scope.page.pageIndex,
         PageSize: $scope.page.pageSize,
       }
       basisiteServer.basisitelist(param).then(function(res){
+        $scope.pageLoading = false;
         $scope.addressList = res.res.data.list;
         $scope.page.totalCnt = res.res.data.count;
       })

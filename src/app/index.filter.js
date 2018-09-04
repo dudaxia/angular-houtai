@@ -7,7 +7,7 @@ angular.module('ngTicket')
         };
     }).filter("apiUrlPrefix", function($config) {
         return function(apiurl) {
-            return "http://" + $config.host.www + $config.host.api3 + apiurl;
+            return $config.host.apifix + apiurl;
         };
     }).filter("textBrace", function() {
         return function(val) {

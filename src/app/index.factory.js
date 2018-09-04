@@ -232,7 +232,7 @@ angular.module('ngTicket')
                 if ($config.debug) {
                     $dialogs.alert(response.data.msg || response.data)
                 } else {
-                    // $toaster.info(response.data.msg || "网络异常 请重试 !");
+                    $toaster.info(response.data.msg || "网络异常 请重试 !");
                 }
                 return deferred.reject(response);
             }
@@ -291,17 +291,17 @@ angular.module('ngTicket')
         }
 
         var _responseError = function(rejection) {
-            var errorTips = function() {
-                if ($config.debug) {
-                    var $dialogs = $injector.get('$dialogs');
-                    $dialogs.alert(rejection.data.message || rejection.data)
-                } else {
-                    $toaster.info("网络异常 请重试 !");
-                }
-            }
-            if (rejection.status != 200) {
-                errorTips();
-            };
+            // var errorTips = function() {
+            //     if ($config.debug) {
+            //         var $dialogs = $injector.get('$dialogs');
+            //         $dialogs.alert(rejection.data.message || rejection.data)
+            //     } else {
+            //         $toaster.info("网络异常 请重试 !");
+            //     }
+            // }
+            // if (rejection.status != 200) {
+            //     errorTips();
+            // };
 
             return $q.reject(rejection);
         }

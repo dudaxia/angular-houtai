@@ -15,7 +15,8 @@
       <section class="scrollable wrapper w-f">
         <section class="panel panel-default">
           <div class="panel-body">
-            <div class="clearfix" ng-if="!addCompany">
+            <div class="load" ng-if="pageLoading">正在加载中</div>
+            <div class="clearfix" ng-if="!addCompany&&!pageLoading">
               <div class="col-sm-2" subside-menu  layout="1"  has-center="false" current-menu="currentMenu" get-content-detail="getContentDetail(url)" ng-if="subMenu.length"></div>
               <div class="col-sm-10 instruction-list g-mb60" style="padding-right:0;">
                 <div class="bg-white wrapper-sm h-full">
