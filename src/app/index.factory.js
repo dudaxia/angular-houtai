@@ -240,6 +240,7 @@ angular.module('ngTicket')
 
         return {
             post: function(url, data, config) {
+                // console.log("post",$filter('apiUrlPrefix')(url))
                 var deferred = $q.defer();
                 config = angular.extend({}, commond, config);
                 if (!window.postFlag) {
@@ -255,6 +256,7 @@ angular.module('ngTicket')
                 return deferred.promise;
             },
             get: function(url, data, config) {
+                // console.log("get",$filter('apiUrlPrefix')(url))
                 var deferred = $q.defer();
                 config = angular.extend({}, commond, config);
                 if (!window.postFlag) {

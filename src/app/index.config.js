@@ -160,7 +160,17 @@ angular.module('ngTicket')
                 cityList: "/api/Area/List"
             },
             organization: {
-                list: '/api/Org/List'
+                list: '/api/Org/List',
+                createCompany: '/api/Org/Company/Add',
+                createApart: '/api/Org/Department/Add',
+                companyDetail: "/api/Org/Company/Detail",
+                apartmentDetail: "/api/Org/Department/Detail",
+                companyList: "/api/Org/Company/List",
+                elitCompany: "/api/Org/Company/Edit",
+                editApartment: "/api/Org/Department/Edit"
+            },
+            fileupload: {
+                upload: "/api/Images/UploadFiles"
             }
         },
         apiField: {

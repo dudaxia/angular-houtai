@@ -1,0 +1,19 @@
+<div class="menus-nav1">
+    <ul class="nav-menu-new nav-new-top">
+        <li  ng-repeat="value in subtreeList track by value.id">    
+            <a class="auto" title="{{value.name}}" ng-click="onClickItem(value.id,value)">
+                <i class="menu-logo pull-left fa-fw" ng-style="{'background-image':'url('+ value.logo+')'}"></i>
+                <span >{{value.name}}</span>
+                <i class="iconfont pull-right ng-class:{'zhan-liebiao-shouqi':!value.show,'zhan-liebiao-zhankai':value.show}" ng-if="value.subData.length>0" ng-click="showSubItem(value)" title="展开"></i> 
+                <i class="iconfont zhan-tianjia m-r-xs pull-right" style="font-size: 13px;" ng-click="addDepartment(value)" title="添加部门"></i> 
+            </a>
+            <ul class="nav-menu-new menu-sub" ng-if="value.subData&&value.subData.length>0&&value.show"> 
+                <li ng-repeat="svalue in value.subData track by svalue.id">
+                    <a ng-click="onClickItem(svalue.id,svalue)" class="auto nosub ng-class:{'active':svalue.id==activeItemId}" title="{{svalue.name}}">
+                        <span>{{svalue.name}}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

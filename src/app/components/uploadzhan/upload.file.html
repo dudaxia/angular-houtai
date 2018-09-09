@@ -1,0 +1,21 @@
+<div class="uploadify-queue m-t-xs">
+    <div id="upload{{$index}}" class="uploadify-queue-item" ng-repeat="f in files">
+        <div ng-if="!f.success">
+        <p class="m-r-xs inline">{{f.name}}</p><span class="m-r-xs">({{f.size|formatBytes}})</span><span class="m-r-xs">文件上传中<i class="fa fa-spinner fa-spin m-l-xs"></i><!-- {{f.fileProgress}}% --></span>
+           <!--  <div class="uploadify-progress">
+               <div class="uploadify-progress-bar" style="width: {{f.fileProgress}}%;"> </div>
+           </div> -->
+        </div>
+    </div>
+</div>
+<ul class="list-unstyled list-inline m-t upload-list ">
+    <li  ng-repeat="f in fileList">
+        <a href="javascript:;" class="close" ng-click="del($index)"><i class="fa fa-times-circle"></i></a>
+        <span class="m-r-xs"><a  href="{{f.url}}" class="text-href" target="_blank">{{f.yname}}</a></span>
+        <fresco-img-text ng-if="f.type=='image'" list="f.urls"></fresco-img-text>
+    </li>
+    <li class="add" ng-show="maxCount>fileList.length" ng-file-select ng-model="files" class="drop-box" drag-over-class="dragover" ng-multiple="true" allow-dir="true" accept="image/*,.txt,.rar,.zip,.doc,.docx,.ini,.conf,.eml">
+        <a class="btn btn-default btn-sm" href="javascript:;"><i class="fa fa-plus m-r-xs"></i>上传</a>
+    </li>
+</ul>
+<div class="help-block">最多{{maxCount}}个文件</div>

@@ -1,0 +1,20 @@
+<div class="uploadify-queue ">
+    <div id="upload{{$index}}" class="uploadify-queue-item" ng-repeat="f in files">
+        <div ng-if="f.fileProgress<100">
+            <p class="m-r-xs inline">{{f.name}}</p><span class="m-r-xs">({{f.size|formatBytes}})</span><span class="m-r-xs">{{f.fileProgress}}%</span>
+            <div class="uploadify-progress">
+                <div class="uploadify-progress-bar" style="width: {{f.fileProgress}}%;"> </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ul class="list-unstyled list-inline m-t upload-list ">
+    <li ng-click="selectIndexFun($index)" ng-class="{'index':$index==selectIndex}" ng-repeat="f in fileList">
+        <a href="javascript:;" class="close" ng-click="del($index)"><i class="fa fa-times-circle"></i></a>
+        <img class=" thumb-lg" ng-src="{{f}}">
+    </li>
+    <li class="add" ng-show="maxCount>fileList.length" ng-file-select ng-model="files" class="drop-box" drag-over-class="dragover" ng-multiple="true" allow-dir="true" accept="image/*">
+        <i class="fa fa-plus"></i>
+    </li>
+</ul>
+<div class="help-block">最多5张（建议尺寸640×640），以便在客户端上有较好的展示效果</div>
