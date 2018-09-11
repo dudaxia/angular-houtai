@@ -97,6 +97,14 @@ angular.module('ngTicket')
                 },
                 templateUrl: '/app/basisite/maintain.html'
             })
+            .state('app.basisite.product', {
+                url: '/product',
+                controller: 'productManagementCtrl',
+                data: {
+                    pageTitle: '产品维护'
+                },
+                templateUrl: '/app/basisite/product.html'
+            })
             .state('app.basisite.add', {
                 url: '/add?id',
                 controller: 'addMaintainManagementCtrl',

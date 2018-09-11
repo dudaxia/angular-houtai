@@ -4,6 +4,7 @@
   angular
     .module('ngTicket')
     .controller('maintainManagementCtrl', maintainManagementCtrl)
+    .controller('productManagementCtrl', productManagementCtrl)
     .controller('addMaintainManagementCtrl', addMaintainManagementCtrl)
     .controller('delAddressDialogCtrl', delAddressDialogCtrl)
   ;
@@ -108,5 +109,53 @@
         });
       }
     }
+  }
+  function productManagementCtrl($rootScope,$scope,basisiteServer, $state, $stateParams, $config, tableHelp, listServer, $timeout, $toaster,$httpApi) {
+    $scope.$on('reload', function () {
+      $state.reload();
+    })
+    $scope.pageLoading = true;
+    $scope.pageLoading = false;
+    $scope.page={
+        pageIndex:1,    //当前页索引。
+        pageSize:20,    //单页记录条数
+        totalCnt:20    //总记录数，这个是关键。必传
+    }
+    /**
+     * 分页索引改变事件。业务开发通过此回调重新加载数据。
+     */
+    $scope.onPageIndexChanged=function(){
+      // console.log($scope.page)
+        getAddressList();
+    };
+
+    // function getAddressList() {
+    //   $scope.pageLoading = true;
+    //   var param = {
+    //     PageNow: $scope.page.pageIndex,
+    //     PageSize: $scope.page.pageSize,
+    //   }
+    //   basisiteServer.basisitelist(param).then(function(res){
+    //     $scope.pageLoading = false;
+    //     $scope.addressList = res.res.data.list;
+    //     $scope.page.totalCnt = res.res.data.count;
+    //   })
+    // }
+    // getAddressList();
+
+
+    $scope.address={
+      province:'',
+      city:'',
+      district:'',
+      street:'',
+      string:''
+    }
+    $scope.deleteaddress = function () {
+      basisiteServer.delAddress().result.then(function(data){
+
+      })
+    }
+
   }
 })();

@@ -109,6 +109,7 @@
       $scope.isCompany = false;
       $scope.addCompany = false;
       var data = params.data;
+      $scope.entity.companyId = data.id;
       console.log("addDepartment",data)
       var sortNum = getApartNum(data.id);
       var addApartParam = {
