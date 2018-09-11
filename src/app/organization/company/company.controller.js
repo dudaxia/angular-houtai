@@ -30,7 +30,30 @@
       })
     }
     getCompanyList();
+    // s省市区
+    $scope.getAreaListFun = function() {
+      organizationServer.getAreaList().then(function(res){
+        $scope.provinceAreaList = res.res.data;
+      },function(err){
 
+      })
+    }
+    $scope.getAreaListFun();
+    $scope.getAreaListChange = function(pid) {
+      console.log(pid);
+      angular.forEach($scope.provinceAreaList,function(item){
+        if(item.id==pid){
+          $scope.cityAreaList = item.subList;
+        }
+      })
+    }
+    $scope.getAreaAreaListChange = function(cid){
+      angular.forEach($scope.cityAreaList,function(item){
+        if(item.id==cid){
+          $scope.areaAreaList = item.subList;
+        }
+      })
+    }
     // 下拉公司选项
     function companyAllList() {
       // $scope.pageLoading = true;
@@ -83,6 +106,8 @@
     $rootScope.$on("addDepartment",function(e,params){
       $scope.entity = {};
       $scope.addApart = true;
+      $scope.isCompany = false;
+      $scope.addCompany = false;
       var data = params.data;
       console.log("addDepartment",data)
       var sortNum = getApartNum(data.id);
@@ -128,8 +153,8 @@
       var postData = {
         CompanyName: $scope.entity.name,
         CompanyLogo: $scope.entity.logo,
-        // ProvinceAreaId: "54",
-        // CityAreaId: "345",
+        ProvinceAreaId: $scope.entity.ProvinceAreaId,
+        CityAreaId: $scope.entity.CityAreaId,
       }
       organizationServer.createCompany(postData).then(function(result){
         getCompanyList();
@@ -145,8 +170,7 @@
       var postData = {
         CompanyName: $scope.entity.name,
         CompanyLogo: $scope.entity.logo,
-        // ProvinceAreaId: "54",
-        // CityAreaId: "345",
+        SortNum: $scope.entity.SortNum
       }
       organizationServer.createApart(postData).then(function(result){
         getCompanyList();
@@ -162,8 +186,8 @@
       var postData = {
         CompanyName: $scope.entity.name,
         CompanyLogo: $scope.entity.logo,
-        ProvinceAreaId: "54",
-        CityAreaId: "345",
+        ProvinceAreaId: $scope.entity.ProvinceAreaId,
+        CityAreaId: $scope.entity.CityAreaId,
       }
       organizationServer.elitCompany(postData).then(function(result){
         getCompanyList();
@@ -178,8 +202,7 @@
       var postData = {
         CompanyName: $scope.entity.name,
         CompanyLogo: $scope.entity.logo,
-        ProvinceAreaId: "54",
-        CityAreaId: "345",
+        SortNum: $scope.entity.SortNum
       }
       organizationServer.editApartment(postData).then(function(result){
         getCompanyList();

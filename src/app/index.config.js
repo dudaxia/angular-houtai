@@ -167,7 +167,9 @@ angular.module('ngTicket')
                 apartmentDetail: "/api/Org/Department/Detail",
                 companyList: "/api/Org/Company/List",
                 elitCompany: "/api/Org/Company/Edit",
-                editApartment: "/api/Org/Department/Edit"
+                editApartment: "/api/Org/Department/Edit",
+                areaTreeList: "/api/Area/TreeList",
+                userlist: "/api/Org/User/List"
             },
             fileupload: {
                 upload: "/api/Images/UploadFiles"

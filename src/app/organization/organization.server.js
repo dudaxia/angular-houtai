@@ -21,6 +21,8 @@
       companyList: resolveGet($config.api3.organization.companyList),
       elitCompany: resolve($config.api3.organization.elitCompany),
       editApartment: resolve($config.api3.organization.editApartment),
+      getAreaList: resolveGet($config.api3.organization.areaTreeList),
+      userlist: resolveGet($config.api3.organization.userlist),
 
       deleteList:function(item){ //删除列表一数据
         return $dialogs.create('/app/organization/company/deleteList.dialog.html', 'deleteOrganizationListCtrl', item);
