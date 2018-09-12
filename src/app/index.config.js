@@ -177,7 +177,10 @@ angular.module('ngTicket')
                 areaTreeList: "/api/Area/TreeList",
                 userlist: "/api/Org/User/List",
                 stationlist: "/api/Org/Role/List",
-                addUser: "/api/Org/User/Add"
+                addUser: "/api/Org/User/Add",
+                stationuserlist:"/api/Org/Role/UserList",
+                stationUserAdd:"/api/Org/Role/Add",
+                stationUserAddUser: "/api/Org/Role/AddUser"
             },
             fileupload: {
                 upload: "/api/Images/UploadFiles"

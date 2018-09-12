@@ -16,8 +16,8 @@
     $scope.pageLoading = true;
     $scope.page={
         pageIndex:1,    //当前页索引。
-        pageSize:20,    //单页记录条数
-        totalCnt:20    //总记录数，这个是关键。必传
+        pageSize:10,    //单页记录条数
+        totalCnt:10    //总记录数，这个是关键。必传
     }
     /**
      * 分页索引改变事件。业务开发通过此回调重新加载数据。

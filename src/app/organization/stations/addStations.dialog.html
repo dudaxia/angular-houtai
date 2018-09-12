@@ -1,0 +1,32 @@
+<form class="form-horizontal" form-validator formvalidatorconfig="eventformvalidate" method="post">  
+    <div class="modal-header">
+        <h4 class="modal-title inline">添加岗位</h4>
+        <button type="button" class="close" ng-click="cancel()" class="pull-right">&times;</button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must">名称</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="Name" data-rule-required="true" ng-model="entity.Name" placeholder="请输入名称">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must">所属公司</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="CompanyId" data-rule-required="true" ng-model="entity.CompanyId" placeholder="请输入公司">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label must">公司地址</label>
+            <div class="col-sm-8">
+               <select class="input-sm m-r-sm fl" name="fff" ng-options="item.id as item.areaName for item in provinceAreaList" ng-model="entity.ProvinceAreaId" ng-change="getAreaListChange(entity.ProvinceAreaId)"></select>
+               <select class="input-sm m-r-sm fl" name="fff" ng-options="item.id as item.areaName for item in cityAreaList" ng-model="entity.CityAreaId" ng-change="getAreaAreaListChange(entity.CityAreaId)" ng-show="entity.ProvinceAreaId"></select>
+               <select class="input-sm m-r-sm fl" name="fff" ng-options="item.id as item.areaName for item in areaAreaList" ng-model="entity.CountyAreaId" ng-show="entity.CityAreaId"></select>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" btn-loading="saveloading" loading-text="创建中...">确定</button>
+        <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</form>

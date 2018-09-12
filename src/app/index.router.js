@@ -18,7 +18,7 @@ angular.module('ngTicket')
                 url: '/dashboard',
                 controller: '',
                 data: {
-                    pageTitle: '...系统'
+                    pageTitle: '后台管理系统'
                 },
                 templateUrl: '/app/dashboard/dashboard.html'
             });
@@ -80,6 +80,14 @@ angular.module('ngTicket')
                     pageTitle: '岗位管理'
                 },
                 templateUrl: '/app/organization/stations/stations.html'
+            })
+            .state('app.organization.stationsUserList', {
+                url: '/stationsUserList/:id',
+                controller: 'stationsUserListCtrl',
+                data: {
+                    pageTitle: '岗位管理'
+                },
+                templateUrl: '/app/organization/stations/stations.userList.html'
             })
             .state('app.organization.users', {
                 url: '/users',
