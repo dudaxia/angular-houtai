@@ -1,0 +1,54 @@
+<form class="form-horizontal vbox" form-validator formvalidatorconfig="eventformvalidate" method="post">
+  <section class="vbox main-content">
+    <header class="header bg-white b-b clearfix">
+      <form class="talbe-search" form-serialize method="post" table-params="tableParams">
+        <div class="row m-t-sm">
+          <div class="col-sm-8 m-b-xs">
+              <span class="m-r">流程模块</span>
+              <!-- <div class="btn-group  m-r-xs" dropdown>
+                  <a class="btn btn-sm btn-primary pointer m-r-xs" title="新增流程" ng-click="addProcess()"> <i class="fa fa-plus m-r-xs"></i>新增模块</a>
+              </div> -->
+          </div>
+        </div>
+      </form>
+    </header>
+    <div class="section scrollable wrapper w-f m-b-md">
+      <div class="panel panel-default wrapper">
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must new-control-label">所属模块</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="name" data-rule-required="true" ng-model="entity.categoryId" placeholder="请输所属模块">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must new-control-label">类型</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="name" data-rule-required="true" ng-model="entity.controlType" placeholder="请输类型">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must new-control-label">标题</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="name" data-rule-required="true" ng-model="entity.controlTitle" placeholder="请输标题">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must new-control-label">排序号</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="name" data-rule-required="true" ng-model="entity.sortNum" placeholder="请输排序号">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label must new-control-label">是否必填</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="name" data-rule-required="true" ng-model="entity.isRequired" placeholder="请输是否必填">
+            </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer bg-white b-t text-right pos-abt" ng-if="detailData.length==0">
+        <button type="submit" class="btn btn-primary" btn-loading="saveloading" loading-text="保存中...">保存</button>
+        <button type="button" class="btn btn-default" back-state="">取消</button>
+    </footer>
+  </section>
+</form>

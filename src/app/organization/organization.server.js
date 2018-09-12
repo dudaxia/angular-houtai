@@ -23,10 +23,15 @@
       editApartment: resolve($config.api3.organization.editApartment),
       getAreaList: resolveGet($config.api3.organization.areaTreeList),
       userlist: resolveGet($config.api3.organization.userlist),
+      stationlist: resolveGet($config.api3.organization.stationlist),
+      addUser: resolve($config.api3.organization.addUser),
 
       deleteList:function(item){ //删除列表一数据
         return $dialogs.create('/app/organization/company/deleteList.dialog.html', 'deleteOrganizationListCtrl', item);
-      }
+      },
+      addUserDialog:function(item){ 
+        return $dialogs.create('/app/organization/users/addUser.dialog.html', 'addUserCtrl', item);
+      },
     };
     function resolve(url) {
       return function (item) {

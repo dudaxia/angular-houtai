@@ -1,18 +1,45 @@
+
 <section class="vbox">
   <header class="header bg-white b-b clearfix">
     <div class="m-t"></div>岗位管理
   </header>
   <div class="section scrollable wrapper w-f m-b-md">
-    
+    <div class="panel panel-default ">
+      <div  class="table-responsive bg-white wrapper-sm ">
+        <div class="load" ng-if="pageLoading">正在加载中</div>
+        <div class="panel-body">
+          <table class="table table-striped table-hover" ng-if="!pageLoading">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>地址</th>
+                <th>名称</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in stationsList track by $index">
+                <td>{{item.id}}</td>
+                <td>{{item.userArea||"-"}}</td>
+                <td>{{item.name||"-"}}</td>
+              </tr>
+            </tbody>
+            <tbody ng-if="!stationsList.length">
+              <tr class="text-center">
+                <td colspan="10" ng-if="$data.length == 0">暂无数据</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- <footer class="footer bg-white" fix-footer-ex="" fix-con-selector=".main-content" style="left: 200px;padding:2px 240px 0 10px;">
+  <footer class="footer bg-white" fix-footer-ex="" fix-con-selector=".main-content" style="left: 200px;padding:2px 240px 0 10px;">
     <div class="row text-center-xs">
       <div class="col-md-5 hidden-sm">
-        <p ng-if="curTab == 1" class="text-muted m-t">总共{{ tableParams.total() }}条 当前为第{{ tableParams.page() }}页</p>
-        <p ng-if="curTab == 2" class="text-muted m-t">总共{{ tableParams2.total() }}条 当前为第{{ tableParams2.page() }}页</p>
+        <p class="text-muted m-t">总共{{ page.totalCnt }}条 当前为第{{ page.pageIndex }}页</p>
       </div>
-      <div ng-show="curTab == 1" id="ng-pagination" class="col-md-7 col-sm-12 text-right text-center-xs"></div>
-      <div ng-show="curTab == 2" id="ng-pagination2" class="col-md-7 col-sm-12 text-right text-center-xs"></div>
+      <div wmo-pagination page-index="page.pageIndex" page-size="page.pageSize" total-cnt="page.totalCnt" on-page-index-changed="onPageIndexChanged()" style="margin:0;float:right;padding-top:8px;"></div>
     </div>
-  </footer> -->
+  </footer>
 </section>
+

@@ -22,7 +22,9 @@
 
     $scope.addCity = function () {
       modulemanageServer.addCityDialog().result.then(function(data){
-
+        if(data){
+          getCityList();
+        }
       })
     } 
   }
@@ -45,14 +47,26 @@
       $scope.entity = {};
     }
     function addComponent () {
-      console.log("address",$scope.address)
-      // configurationServer.addComponent({name:$scope.entity.name,code:$scope.entity.code}).then(function(res){
+      console.log("address",$scope.address);
+      if($scope.address.string){
+        var adresStr = $scope.address.string.split('/');
+        var param = {
+          ProvinceArea: adresStr[0],
+          CityArea: adresStr[1],
+          CountyArea: adresStr[2]
+        }
+        console.log("param",param)
+        modulemanageServer.addArea(param).then(function(res){
+          $scope.saveloading = false;
+          $modalInstance.close(true);
+          $toaster.success("添加成功")
+        },function(err){
+          $scope.saveloading = false;
+        })
+      }else{
+        $toaster.warning("请选择地址");
         $scope.saveloading = false;
-        // $modalInstance.close(true);
-      //   $toaster.success("添加成功")
-      // },function(err){
-      //   $scope.saveloading = false;
-      // })
+      }
     }
     function updateComponent () {
       // configurationServer.updateComponent({id:data.id,name:$scope.entity.name,code:$scope.entity.code}).then(function(res){

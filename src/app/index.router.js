@@ -193,6 +193,14 @@ angular.module('ngTicket')
                 },
                 templateUrl: '/app/modulemanager/picture/picture.list.html'
             })
+            .state('app.modulemanager.picedit', {
+                url: '/picedit/:id',
+                controller: 'pictureEditCtrl',
+                data: {
+                    pageTitle: '图片管理'
+                },
+                templateUrl: '/app/modulemanager/picture/picture.edit.html'
+            })
             .state('app.modulemanager.comment', {
                 url: '/comment',
                 controller: 'commentModuleManagerCtrl',

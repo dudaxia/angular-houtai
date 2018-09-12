@@ -4,6 +4,7 @@
   angular
     .module('ngTicket')
     .controller('usersManagementCtrl', usersManagementCtrl)
+    .controller('addUserCtrl', addUserCtrl)
     .filter('hasFaceReg',function(){
         return function(status){
           var str = '';
@@ -49,6 +50,70 @@
     }
     getuserList();
 
+    $scope.addUserFun = function() {
+      organizationServer.addUserDialog().result.then(function(data){
+        if(data){
+          getuserList();
+        }
+      })
+    }
+
     
+  }
+
+  function addUserCtrl($scope, $state,organizationServer, $toaster, $modalInstance,data) {
+    $scope.cancel = function() {
+      $modalInstance.dismiss('Canceled');
+    };
+
+    $scope.entity = {};
+
+    // s省市区
+    $scope.getAreaListFun = function() {
+      organizationServer.getAreaList().then(function(res){
+        $scope.provinceAreaList = res.res.data;
+      },function(err){
+
+      })
+    }
+    $scope.getAreaListFun();
+    $scope.getAreaListChange = function(pid) {
+      angular.forEach($scope.provinceAreaList,function(item){
+        if(item.id==pid){
+          $scope.cityAreaList = item.subList;
+        }
+      })
+    }
+    $scope.getAreaAreaListChange = function(cid){
+      angular.forEach($scope.cityAreaList,function(item){
+        if(item.id==cid){
+          $scope.areaAreaList = item.subList;
+        }
+      })
+    }
+
+    $scope.upload = function(data){
+      console.log("done upload img",data);
+      if(data&&data.res&&data.res.data&&data.res.data.length){
+        $scope.entity.UserPhoto = data.res.data[0].imageUrl;
+      }else {
+        $toaster.warning("上传失败！请稍后重试")
+      }
+    }
+
+    $scope.eventformvalidate = {
+      submitHandler: function () {
+        console.log($scope.entity)
+        $scope.saveloading = true;
+        organizationServer.addUser($scope.entity).then(function(ret){
+          $modalInstance.close(true);
+          $toaster.success("添加成功");
+        }, function(ret) {
+          // $toaster.info(ret.msg);
+        }).finally(function() {
+          $scope.saveloading = false;
+        })
+      }
+    }
   }
 })();

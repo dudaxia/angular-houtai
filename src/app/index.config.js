@@ -157,7 +157,13 @@ angular.module('ngTicket')
                 list:"/api/Tower/List"
             },
             module: {
-                cityList: "/api/Area/List"
+                cityList: "/api/Area/List",
+                addArea: "/api/Area/Add",
+                moduleList: "/api/Module/List",
+                addProcess: "/api/Module/Add",
+                addProcessForm: "/api/Module/AddForm",
+                formDetail: "/api/Module/FormDetail",
+                deleteForm: "/api/Module/DeleteForm",
             },
             organization: {
                 list: '/api/Org/List',
@@ -169,7 +175,9 @@ angular.module('ngTicket')
                 elitCompany: "/api/Org/Company/Edit",
                 editApartment: "/api/Org/Department/Edit",
                 areaTreeList: "/api/Area/TreeList",
-                userlist: "/api/Org/User/List"
+                userlist: "/api/Org/User/List",
+                stationlist: "/api/Org/Role/List",
+                addUser: "/api/Org/User/Add"
             },
             fileupload: {
                 upload: "/api/Images/UploadFiles"

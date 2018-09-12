@@ -1,0 +1,19 @@
+<form class="form-horizontal" form-validator formvalidatorconfig="eventformvalidate" method="post">  
+    <div class="modal-header">
+        <h4 class="modal-title inline">删除模块</h4>
+        <button type="button" class="close" ng-click="cancel()" class="pull-right">&times;</button>
+    </div>
+    <div class="modal-body">
+        <p>是否确定删除该模块？</p>
+        <!-- <div class="form-group clearfix" style="margin-bottom:100px;">
+	      	<label class="col-sm-3 control-label">请选择地址<span class="must-dot"></span></label>
+	      	<div class="col-sm-9 m-b-n-md">
+	        	<address ng-model="address"></address>
+	    	</div>
+    	</div> -->
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" btn-loading="saveloading" loading-text="创建中...">确定</button>
+        <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</form>
