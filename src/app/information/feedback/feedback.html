@@ -22,10 +22,10 @@
               <tr>
                 <th>ID</th>
                 <th>姓名</th>
-                <th>头像</th>
+                <th>图片</th>
                 <th>内容</th>
                 <th>时间</th>
-                <th>isActive</th>
+                <th>操作</th>
               </tr>
             </thead>
             <tbody>
@@ -33,15 +33,16 @@
                 <td>{{item.id}}</td>
                 <td>{{item.userName}}</td>
                 <td>
-                  <img ng-src="{{item.images}}" style="width:25px;">
+                  <a ng-href="{{item.images}}" target="_blank">
+                    <img ng-src="{{item.images}}" style="width:25px;">
+                  </a>
                 </td>
                 <td>{{item.contents}}</td>
                 <td>{{item.createTime}}</td>
-                <td>{{item.isActive}}</td>
-                <!-- <td>
-                  <a ui-sref="app.basisite.add({id:item.id})" class="text-href m-r">编辑</a>
-                  <a ng-click="deleteaddress({id:item.id})" class="text-href m-r">删除</a>
-                </td> -->
+                <td>
+                  <a ng-if="item.isActive==1" >已处理</a>
+                  <a ng-click="deleteaddress({id:item.id})" ng-if="item.isActive==0" class="text-href">处理</a>
+                </td>
               </tr>
             </tbody>
             <tbody ng-if="!feedbackList.length">

@@ -7,7 +7,22 @@
     .controller('deleteAreaDialogCtrl', deleteAreaDialogCtrl)
     .controller('addProcessDialogCtrl', addProcessDialogCtrl)
     .controller('pictureEditCtrl', pictureEditCtrl)
-
+    .directive('customForm', ['$document', '$window',"$timeout","$toaster","$rootScope", function($document, $window,$timeout,$toaster,$rootScope) {
+      return {
+        restrict: 'AC',
+        scope: {
+          formInfo:'=?'
+        },
+        templateUrl: '/app/modulemanager/picture/customForm.tmp.html',
+        link: function(scope, el, attr) {
+            var formInfo = scope.formInfo;
+          scope.deleteForm = function(info){
+            console.log(info)
+            $rootScope.$broadcast("deleteCustomForm",info)
+          }
+        }
+      };
+    }])
 
   ;
   /* @ngInject */
@@ -96,38 +111,57 @@
       }
     }
   }
-  function pictureEditCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, modulemanageServer, $timeout, $toaster) {
+  function pictureEditCtrl($rootScope, $scope, $state, $stateParams, $config, tableHelp, modulemanageServer, $timeout, $toaster, $dialogs) {
     $scope.$on('reload', function () {
       $state.reload();
     })
 
-    $scope.entity = {};
-    
+    $scope.entity = {IsRequired:1};
+
+    $scope.formTypeList = [
+      {name:'单行输入',value:'TextBox'},
+      {name:'多行输入',value:'TextArea'},
+      {name:'数字输入',value:'NumberBox'},
+      {name:'时间选择',value:'TimeBox'},
+      {name:'下拉单选',value:'ListBox'},
+      {name:'图片上传',value:'ImageBox'},
+    ]
+
     $scope.pageLoading = true;
     function getFormDetail() {
       modulemanageServer.getFormDetail({Id:$stateParams.id}).then(function(res){
-        $scope.detailData = res.res.data;
-        if($scope.detailData.length){
-          $scope.entity = res.res.data[0];
-        }
+        $scope.addedFormList = res.res.data;
         $scope.pageLoading = false;
       })
     }
     getFormDetail();
 
-    $scope.eventformvalidate = {
-      submitHandler: function() {
-        $scope.$apply(function() {
-          $scope.saveloading = true;
-          modulemanageServer.addProcessForm($scope.entity).then(function(res){
-            $scope.saveloading = false;
-            // $modalInstance.close(true);
-          });
+    $rootScope.$on("deleteCustomForm",function(e,params){
+      console.log(params)
+      deleteCustomForm(params.id);
+    })
+
+    function deleteCustomForm(id){
+      $dialogs.confirm('是否删除该表单?').result.then(function() {
+        modulemanageServer.deleteForm({id:id}).then(function(res){
+          getFormDetail();
+          $scope.entity = {IsRequired:1};
+          $scope.saveloading = false;
+          $toaster.success("添加成功");
         });
-      }
+      })
     }
 
-    
+    $scope.addForm = function() {
+      $scope.entity.CategoryId = $stateParams.id;
+      modulemanageServer.addProcessForm($scope.entity).then(function(res){
+        getFormDetail();
+        $scope.entity = {IsRequired:1};
+        $scope.saveloading = false;
+        $toaster.success("添加成功");
+      });
+    }
+  
   }
 
 })();
