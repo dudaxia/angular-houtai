@@ -102,6 +102,15 @@
 
     $scope.entity = {};
 
+    $scope.pageLoading = true;
+    function getCompanyList() {
+      organizationServer.getCompanyList().then(function(res){
+        $scope.pageLoading = false;
+        $scope.companyList = res.res.data||[];
+      })
+    }
+    getCompanyList();
+
     // s省市区
     $scope.getAreaListFun = function() {
       organizationServer.getAreaList().then(function(res){

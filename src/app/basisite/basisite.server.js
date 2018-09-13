@@ -13,7 +13,23 @@
           },
           basisitelist:function(item){
             return $httpApi.get($config.api3.basisite.list, item);
-          }
+          },
+          productlist:function(item){
+            return $httpApi.get($config.api3.basisite.productlist, item);
+          },
+          addProductDialog: function(item){
+            return $dialogs.create('/app/basisite/addProduct.dialog.html', 'addProductDialogCtrl',item);
+          },
+          addProduct: function(item) {
+            return $httpApi.post($config.api3.basisite.addProduct, item);
+          },
+          editProduct: function(item) {
+            return $httpApi.post($config.api3.basisite.editProduct, item);
+          },
+          feedbacklist:function(item){
+            return $httpApi.get($config.api3.basisite.feedbacklist, item);
+          },
+
       }
     }])
 })();

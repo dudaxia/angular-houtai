@@ -68,6 +68,31 @@
 
     $scope.entity = {};
 
+    $scope.pageLoading = true;
+    function getCompanyList() {
+      organizationServer.getCompanyList().then(function(res){
+        $scope.pageLoading = false;
+        $scope.companyList = res.res.data||[];
+      })
+    }
+    getCompanyList();
+
+    $scope.getDepartmentListByPid = function(pid) {
+      angular.forEach($scope.companyList,function(item){
+        if(item.id==pid){
+          $scope.departmentList = item.subData||[]
+        }
+      })
+    }
+
+    $scope.getDeptGuid = function(did){
+      angular.forEach($scope.departmentList,function(item){
+        if(item.id==did){
+          $scope.entity.DeptGuid = item.deptGuid;
+        }
+      })
+    }
+
     // s省市区
     $scope.getAreaListFun = function() {
       organizationServer.getAreaList().then(function(res){
@@ -104,6 +129,10 @@
     $scope.eventformvalidate = {
       submitHandler: function () {
         console.log($scope.entity)
+        if(!$scope.entity.UserPhoto){
+          $toaster.warning("请上传头像");
+          return;
+        } 
         $scope.saveloading = true;
         organizationServer.addUser($scope.entity).then(function(ret){
           $modalInstance.close(true);

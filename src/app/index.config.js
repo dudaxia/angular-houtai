@@ -154,7 +154,11 @@ angular.module('ngTicket')
                 info: "/info"
             },
             basisite:{
-                list:"/api/Tower/List"
+                list:"/api/Tower/List",
+                productlist: "/api/ProductConfig/List",
+                addProduct: "/api/ProductConfig/Add",
+                editProduct: "/api/ProductConfig/Edit",
+                feedbacklist: "/api/ContactUs/List"
             },
             module: {
                 cityList: "/api/Area/List",

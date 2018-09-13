@@ -7,6 +7,7 @@
     .controller('productManagementCtrl', productManagementCtrl)
     .controller('addMaintainManagementCtrl', addMaintainManagementCtrl)
     .controller('delAddressDialogCtrl', delAddressDialogCtrl)
+    .controller('addProductDialogCtrl', addProductDialogCtrl)
   ;
   /* @ngInject */
   function maintainManagementCtrl($rootScope,$scope,basisiteServer, $state, $stateParams, $config, tableHelp, listServer, $timeout, $toaster,$httpApi) {
@@ -115,7 +116,6 @@
       $state.reload();
     })
     $scope.pageLoading = true;
-    $scope.pageLoading = false;
     $scope.page={
         pageIndex:1,    //当前页索引。
         pageSize:20,    //单页记录条数
@@ -125,37 +125,79 @@
      * 分页索引改变事件。业务开发通过此回调重新加载数据。
      */
     $scope.onPageIndexChanged=function(){
-      // console.log($scope.page)
-        getAddressList();
+        getProductList();
     };
 
-    // function getAddressList() {
-    //   $scope.pageLoading = true;
-    //   var param = {
-    //     PageNow: $scope.page.pageIndex,
-    //     PageSize: $scope.page.pageSize,
-    //   }
-    //   basisiteServer.basisitelist(param).then(function(res){
-    //     $scope.pageLoading = false;
-    //     $scope.addressList = res.res.data.list;
-    //     $scope.page.totalCnt = res.res.data.count;
-    //   })
-    // }
-    // getAddressList();
-
-
-    $scope.address={
-      province:'',
-      city:'',
-      district:'',
-      street:'',
-      string:''
+    function getProductList() {
+      $scope.pageLoading = true;
+      var param = {
+        PageNow: $scope.page.pageIndex,
+        PageSize: $scope.page.pageSize,
+      }
+      basisiteServer.productlist(param).then(function(res){
+        $scope.pageLoading = false;
+        $scope.productList = res.res.data.list;
+        $scope.page.totalCnt = res.res.data.count;
+      })
     }
+    getProductList();
+
+    $scope.addProduct = function(item) {
+      var params = item || {};
+      basisiteServer.addProductDialog(params).result.then(function(data){
+        if(data){
+          getProductList();
+        }
+      })
+    }
+
     $scope.deleteaddress = function () {
       basisiteServer.delAddress().result.then(function(data){
 
       })
     }
 
+  }
+  function addProductDialogCtrl($rootScope,$scope, $timeout, $state, $sce,basisiteServer,$stateParams,$toaster,$httpApi,$config,data,$modalInstance) {
+    $scope.cancel = function() {
+        $modalInstance.dismiss('Canceled');
+    };
+    $scope.entity = {};
+    // console.log(data)
+    if(data&&data.id){
+      $scope.isEdit = true;
+      data.DicName = data.dicName;
+      $scope.entity = data;
+    }
+
+    function addProductFun (){
+      basisiteServer.addProduct({DicName:$scope.entity.DicName}).then(function(res){
+        $modalInstance.close(true);
+        $scope.saveloading = false;
+      })
+    }
+    function editProductFun (){
+      basisiteServer.editProduct({
+        Id:$scope.entity.id,
+        DicName:$scope.entity.DicName
+      }).then(function(res){
+        $modalInstance.close(true);
+        $scope.saveloading = false;
+      })
+    }
+    
+    $scope.eventformvalidate = {
+      submitHandler: function() {
+        $scope.$apply(function() {
+          $scope.saveloading = true;
+          if(!$scope.isEdit){
+            addProductFun();
+          }else{
+            editProductFun();
+          }
+          
+        });
+      }
+    }
   }
 })();
