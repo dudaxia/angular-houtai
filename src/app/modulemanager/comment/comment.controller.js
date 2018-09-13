@@ -6,7 +6,7 @@
     .controller('commentModuleManagerCtrl', commentModuleManagerCtrl)
   ;
   /* @ngInject */
-  function commentModuleManagerCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, listServer, $timeout, $toaster) {
+  function commentModuleManagerCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, $timeout, $toaster) {
     $scope.$on('reload', function () {
       $state.reload();
     })

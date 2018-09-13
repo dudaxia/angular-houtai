@@ -7,7 +7,7 @@
     .controller('doneprocessManagerCtrl', doneprocessManagerCtrl)
   ;
   /* @ngInject */
-  function inprocessManagerCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, listServer, $timeout, $toaster) {
+  function inprocessManagerCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, $timeout, $toaster) {
     $scope.$on('reload', function () {
       $state.reload();
     })
@@ -15,7 +15,7 @@
 
     
   }
-  function doneprocessManagerCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, listServer, $timeout, $toaster) {
+  function doneprocessManagerCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, $timeout, $toaster) {
     $scope.$on('reload', function () {
       $state.reload();
     })

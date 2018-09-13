@@ -7,7 +7,7 @@
     .controller('addCityDialogCtrl', addCityDialogCtrl)
   ;
   /* @ngInject */
-  function cityModuleManagerCtrl($rootScope,$scope,modulemanageServer, $state, $stateParams, $config, tableHelp, listServer, $timeout, $toaster) {
+  function cityModuleManagerCtrl($rootScope,$scope,modulemanageServer, $state, $stateParams, $config, tableHelp, $timeout, $toaster) {
     $scope.$on('reload', function () {
       $state.reload();
     })

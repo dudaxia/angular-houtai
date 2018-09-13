@@ -5,9 +5,6 @@ angular.module('ngTicket')
 
         RestangularProvider.setBaseUrl($config.host.api);
 
-        // $sailsProvider.url = 'http://sbgo.cc:8066';
-        // $httpProvider.url = 'http://sbgo.cc:8066';
-
         (function() { //授权配置&&和错误
             $httpProvider.interceptors.push('authInterceptorService');
             $pageTitleProvider.setDefault('Weimob  Black Cat');
@@ -74,21 +71,11 @@ angular.module('ngTicket')
                 };
 
                 (function() {
-                    //主题
-                    //if (angular.isDefined($localStorage.settings)) {
-                    //    $rootScope.app.settings = $localStorage.settings;
-                    //} else {
-                    //
-                    //    $localStorage.settings = $rootScope.app.settings;
-                    //}
                     $rootScope.$watch('app.settings', function(v) {
                         if ($rootScope.app.settings.asideDock && $rootScope.app.settings.asideFixed) {
                             $rootScope.app.settings.headerFixed = true;
                         }
                         $rootScope.app.settings.container ? angular.element('html').addClass('bg') : angular.element('html').removeClass('bg');
-
-                        //$localStorage.settings = $rootScope.app.settings;
-
                     }, true);
                 })();
 
@@ -113,7 +100,7 @@ angular.module('ngTicket')
                         $rootScope.userData_done = true;
 
                     })
-                    $rootScope.locals = authService.fillAuthData(); //{isAuth:true|false,userData:obj,userRole:obj}
+                    $rootScope.locals = authService.fillAuthData();
                     
                     //实用工具显示权限判断
                     $rootScope.showUseTool = function(){
@@ -137,15 +124,12 @@ angular.module('ngTicket')
             api: '/api',
             api2: "/api2",
             api3: "/api3",
-            apiField: "/api3/Field",
-            apiList: "/api3/List",
-            apiPolicy: "/api3/Policy"
         },
         dateformat: 'yyyy-MM-dd hh:mm',
         dateformatdd: 'yyyy-MM-dd',
         debug: false,
         site: {
-            name: '黑猫'
+            name: '后台管理系统'
         },
         api3: {
             user: {
@@ -190,65 +174,5 @@ angular.module('ngTicket')
                 upload: "/api/Images/UploadFiles"
             }
         },
-        apiField: {
-            fieldList: "/field/list",
-            fieldListDict: "/field/list/dict"
-        },
-        apiList: {
-            dictApplicaitonList: "/dict/applicaiton/list",
-            sheetList: "/sheet/list",
-            sheetEditDict: "/sheet/edit/dict",
-            sheetAdd: "/sheet/add",
-            sheetModify: "/sheet/modify",
-            sheetDelete: "/sheet/delete",
-            sheetdataListDict: "/sheetdata/list/dict",
-            sheetdataList: "/sheetdata/list",
-            sheetdataImport: "/sheetdata/import",
-            sheetdataAdd: "/sheetdata/add",
-            sheetdataDelete: "/sheetdata/delete",
-            sheetdataModify: "/sheetdata/modify"
-
-        },
-        apiPolicy: {
-            strategyList: "/strategy/list",
-            strategyEditDict: "/strategy/edit/dict",
-            strategyEditLevel: "/strategy/edit/level",
-            strategySearch: "/strategy/edit/dict",
-            strategyAdd: "/strategy/add",
-            strategyDelete: "/strategy/delete",
-            strategyModify: "/strategy/modify",
-            ruleList: "/rule/list",
-            ruleDisable: "/rule/disable",
-            ruleEnable: "/rule/enable",
-            ruleDelete: "/rule/delete",
-            templateList: "/template/list",
-            ruleDict: "/rule/dict",
-            ruleAdd: "/rule/add",
-            ruleModify: "/rule/modify",
-            calc:"/rule/dict/calc",
-            findById:"/strategy/findById",
-            tacticSort:"/rule/sort"
-        },
-        role: {
-          roleList: "/role/list",
-          roleDict:"/role/dict",
-          delRole: "role/delete",
-          roleInfo: "/role/info",
-          addRole: "/role/add",
-          editRole: "/role/modify",
-        },
-        apiApplication: {
-          applicationList: "/dict/application/list",
-          applicationAdd: "/dict/application/add",
-          applicationEdit: "/dict/application/modify",
-          applicationDelete: "/dict/application/delete"
-        },
-        apiCustomer: {
-          customerList: "/user/list",
-          customerAdd: "/user/add",
-          customerEdit: "/user/modify",
-          customerDelete: "/user/delete",
-          bachCustomerAdd:"/user/add/applications/roles",
-          bachCustomerDelete:'/user/delete'
-        }
+    
     });

@@ -9,10 +9,8 @@
 
   /* @ngInject */
   function organizationServer($httpApi, $config, $dialogs) {
-    var api = $config.apiList;
 
     return {
-      sheetEditDict: resolve(api.sheetEditDict),
       getCompanyList: resolveGet($config.api3.organization.list),
       createCompany: resolve($config.api3.organization.createCompany),
       createApart: resolve($config.api3.organization.createApart),

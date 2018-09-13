@@ -10,7 +10,7 @@
     .controller('addProductDialogCtrl', addProductDialogCtrl)
   ;
   /* @ngInject */
-  function maintainManagementCtrl($rootScope,$scope,basisiteServer, $state, $stateParams, $config, tableHelp, listServer, $timeout, $toaster,$httpApi) {
+  function maintainManagementCtrl($rootScope,$scope,basisiteServer, $state, $stateParams, $config, tableHelp, $timeout, $toaster,$httpApi) {
     $scope.$on('reload', function () {
       $state.reload();
     })
@@ -57,7 +57,7 @@
     }
 
   }
-  function addMaintainManagementCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, listServer, $timeout, $toaster) {
+  function addMaintainManagementCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, $timeout, $toaster) {
     $scope.$on('reload', function () {
       $state.reload();
     })
@@ -111,7 +111,7 @@
       }
     }
   }
-  function productManagementCtrl($rootScope,$scope,basisiteServer, $state, $stateParams, $config, tableHelp, listServer, $timeout, $toaster,$httpApi) {
+  function productManagementCtrl($rootScope,$scope,basisiteServer, $state, $stateParams, $config, tableHelp, $timeout, $toaster,$httpApi) {
     $scope.$on('reload', function () {
       $state.reload();
     })

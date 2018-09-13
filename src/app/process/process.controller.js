@@ -6,7 +6,7 @@
     .controller('processListCtrl', processListCtrl)
   ;
   /* @ngInject */
-  function processListCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, listServer, $timeout, $toaster) {
+  function processListCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, $timeout, $toaster) {
     $scope.$on('reload', function () {
       $state.reload();
     })

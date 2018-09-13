@@ -6,7 +6,7 @@
     .controller('announcementMessageCtrl', announcementMessageCtrl)
   ;
   /* @ngInject */
-  function announcementMessageCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, listServer, $timeout, $toaster) {
+  function announcementMessageCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, $timeout, $toaster) {
     $scope.$on('reload', function () {
       $state.reload();
     })

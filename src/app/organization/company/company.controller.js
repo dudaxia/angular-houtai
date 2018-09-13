@@ -7,7 +7,7 @@
     .controller('deleteOrganizationListCtrl', deleteOrganizationListCtrl)
   ;
   /* @ngInject */
-  function companyManagementCtrl($rootScope,$scope,organizationServer, $state, $stateParams, $config, tableHelp, listServer, $timeout, $toaster) {
+  function companyManagementCtrl($rootScope,$scope,organizationServer, $state, $stateParams, $config, tableHelp, $timeout, $toaster) {
     $scope.$on('reload', function () {
       $state.reload();
     })
@@ -235,7 +235,7 @@
 
   }
 
-  function deleteOrganizationListCtrl($scope, $state,listServer, $toaster, $modalInstance,data) {
+  function deleteOrganizationListCtrl($scope, $state, $toaster, $modalInstance,data) {
     $scope.cancel = function() {
       $modalInstance.dismiss('Canceled');
     };

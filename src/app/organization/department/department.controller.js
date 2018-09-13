@@ -6,7 +6,7 @@
     .controller('departmentManagementCtrl', departmentManagementCtrl)
   ;
   /* @ngInject */
-  function departmentManagementCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, listServer, $timeout, $toaster) {
+  function departmentManagementCtrl($rootScope,$scope, $state, $stateParams, $config, tableHelp, $timeout, $toaster) {
     $scope.$on('reload', function () {
       $state.reload();
     })
