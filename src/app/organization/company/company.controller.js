@@ -159,6 +159,7 @@
       }
       organizationServer.createCompany(postData).then(function(result){
         getCompanyList();
+        companyAllList();
       }, function(){
         $toaster.info("创建失败！")
       }).finally(function() {

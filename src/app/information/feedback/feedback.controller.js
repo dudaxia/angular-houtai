@@ -38,6 +38,14 @@
     }
     getFeedbackList();
 
+    $scope.chuliFeedback = function(params){
+      basisiteServer.chulifeedback({Id:params.id}).then(function(res){
+        $toaster.success("处理成功");
+        getFeedbackList();
+      },function(err){
+        $toaster.info("处理失败")
+      })
+    }
     
   }
 })();

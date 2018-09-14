@@ -29,6 +29,9 @@
           feedbacklist:function(item){
             return $httpApi.get($config.api3.basisite.feedbacklist, item);
           },
+          chulifeedback: function(item) {
+            return $httpApi.post($config.api3.basisite.chulifeedback, item);
+          },
 
       }
     }])

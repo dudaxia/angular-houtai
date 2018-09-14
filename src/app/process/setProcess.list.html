@@ -4,9 +4,9 @@
     <form class="talbe-search" form-serialize method="post" table-params="tableParams">
       <div class="row m-t-sm">
         <div class="col-sm-8 m-b-xs">
-            <span class="m-r">流程管理</span>
+            <span class="m-r">设置流转</span>
             <div class="btn-group m-r-xs" dropdown>
-                <a class="btn btn-sm btn-primary m-r-xs" title="新增流程" ng-click="addProcess()"> <i class="fa fa-plus m-r-xs"></i>新增流程</a>
+                <a class="btn btn-sm btn-primary m-r-xs" title="新增步骤" ng-click="addProcess()"> <i class="fa fa-plus m-r-xs"></i>新增步骤</a>
             </div>
         </div>
       </div>
@@ -36,8 +36,8 @@
                   </a>
                 </td>
                 <td>
-                  <a ng-click="addProcess(item)" class="text-href m-r">编辑</a>
-                  <a ui-sref="app.process.setlist({id:item.id})" class="text-href">设置流转</a>
+                  <!-- <a ng-click="addProcess(item)" class="text-href m-r">编辑</a> -->
+                  <a ng-click="deleteBuzhou({id:item.id})" class="text-href">删除</a>
                 </td>
               </tr>
             </tbody>

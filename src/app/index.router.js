@@ -129,6 +129,14 @@ angular.module('ngTicket')
                 },
                 templateUrl: '/app/process/process.list.html'
             })
+            .state('app.process.setlist', {
+                url: '/setlist/:id',
+                controller: 'setProcessListCtrl',
+                data: {
+                    pageTitle: '流程列表'
+                },
+                templateUrl: '/app/process/setProcess.list.html'
+            })
             .state('app.information.feedback', {
                 url: '/feedback',
                 controller: 'feedbackMessageCtrl',
@@ -197,7 +205,7 @@ angular.module('ngTicket')
                 url: '/picture',
                 controller: 'pictureModuleManagerCtrl',
                 data: {
-                    pageTitle: '图片管理'
+                    pageTitle: '流程模块'
                 },
                 templateUrl: '/app/modulemanager/picture/picture.list.html'
             })
@@ -205,7 +213,7 @@ angular.module('ngTicket')
                 url: '/picedit/:id',
                 controller: 'pictureEditCtrl',
                 data: {
-                    pageTitle: '图片管理'
+                    pageTitle: '流程模块'
                 },
                 templateUrl: '/app/modulemanager/picture/picture.edit.html'
             })

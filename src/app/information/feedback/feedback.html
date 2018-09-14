@@ -41,7 +41,7 @@
                 <td>{{item.createTime}}</td>
                 <td>
                   <a ng-if="item.isActive==1" >已处理</a>
-                  <a ng-click="deleteaddress({id:item.id})" ng-if="item.isActive==0" class="text-href">处理</a>
+                  <a ng-click="chuliFeedback(item)" ng-if="item.isActive==0" class="text-href">处理</a>
                 </td>
               </tr>
             </tbody>

@@ -142,7 +142,8 @@ angular.module('ngTicket')
                 productlist: "/api/ProductConfig/List",
                 addProduct: "/api/ProductConfig/Add",
                 editProduct: "/api/ProductConfig/Edit",
-                feedbacklist: "/api/ContactUs/List"
+                feedbacklist: "/api/ContactUs/List",
+                chulifeedback: "/api/ContactUs/Audit"
             },
             module: {
                 cityList: "/api/Area/List",
@@ -172,6 +173,11 @@ angular.module('ngTicket')
             },
             fileupload: {
                 upload: "/api/Images/UploadFiles"
+            },
+            process: {
+                processList: "/api/Work/Category",
+                addProcess: "/api/Work/AddCategory",
+                editProcess: "/api/Work/EditCategory"
             }
         },
     

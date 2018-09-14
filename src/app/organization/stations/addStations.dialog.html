@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label must">公司地址</label>
+                <label class="col-sm-2 control-label must">所属区域</label>
                 <div class="col-sm-8">
                    <select class="input-sm m-r-sm fl" name="fff" ng-options="item.id as item.areaName for item in provinceAreaList" ng-model="entity.ProvinceAreaId" ng-change="getAreaListChange(entity.ProvinceAreaId)"></select>
                    <select class="input-sm m-r-sm fl" name="fff" ng-options="item.id as item.areaName for item in cityAreaList" ng-model="entity.CityAreaId" ng-change="getAreaAreaListChange(entity.CityAreaId)" ng-show="entity.ProvinceAreaId"></select>

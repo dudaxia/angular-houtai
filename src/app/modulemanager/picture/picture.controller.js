@@ -17,7 +17,6 @@
         link: function(scope, el, attr) {
             var formInfo = scope.formInfo;
           scope.deleteForm = function(info){
-            console.log(info)
             $rootScope.$broadcast("deleteCustomForm",info)
           }
         }
@@ -137,7 +136,6 @@
     getFormDetail();
 
     $rootScope.$on("deleteCustomForm",function(e,params){
-      console.log(params)
       deleteCustomForm(params.id);
     })
 
