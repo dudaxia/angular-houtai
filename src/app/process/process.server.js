@@ -20,6 +20,12 @@
           addSetProcessDialog: function(item) {
             return $dialogs.create('/app/process/addSetProcess.dialog.html', 'addSetProcessCtrl',item);
           },
+          setProcessList: function(item) {
+            return $httpApi.get($config.api3.process.setProcessList, item);
+          },
+          addProcessSteps: function(item) {
+            return $httpApi.post($config.api3.process.addProcessSteps, item);
+          },
       }
     }])
 })();

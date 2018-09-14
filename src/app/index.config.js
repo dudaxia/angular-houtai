@@ -177,7 +177,9 @@ angular.module('ngTicket')
             process: {
                 processList: "/api/Work/Category",
                 addProcess: "/api/Work/AddCategory",
-                editProcess: "/api/Work/EditCategory"
+                editProcess: "/api/Work/EditCategory",
+                setProcessList: "/api/Work/Steps",
+                addProcessSteps: "/api/Work/AddSteps",
             }
         },
     

@@ -6,7 +6,7 @@
         <div class="col-sm-8 m-b-xs">
             <span class="m-r">设置流转</span>
             <div class="btn-group m-r-xs" dropdown>
-                <a class="btn btn-sm btn-primary m-r-xs" title="新增步骤" ng-click="addProcess()"> <i class="fa fa-plus m-r-xs"></i>新增步骤</a>
+                <a class="btn btn-sm btn-primary m-r-xs" title="新增步骤" ng-click="addSetProcessDialog()"> <i class="fa fa-plus m-r-xs"></i>新增步骤</a>
             </div>
         </div>
       </div>
@@ -21,29 +21,29 @@
             <thead>
               <tr>
                 <th>ID</th>
-                <th>名称</th>
-                <th>图标</th>
-                <th>操作</th>
+                <th>岗位</th>
+                <th>模块</th>
+                <th>是否发起人</th>
+                <th>是否需要人脸验证</th>
+                <!-- <th>操作</th> -->
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="item in processList">
+              <tr ng-repeat="item in setProcessList">
                 <td>{{item.id}}</td>
-                <td>{{item.title}}</td>
-                <td>
-                  <a ng-href="{{item.icon}}" target="_blank" ng-if="item.icon">
-                    <img ng-src="{{item.icon}}" style="width: 25px;">
-                  </a>
-                </td>
-                <td>
-                  <!-- <a ng-click="addProcess(item)" class="text-href m-r">编辑</a> -->
+                <td>{{item.roleTitle}}</td>
+                <td>{{item.moduleCategory}}</td>
+                <td>{{item.isInitiator==1?'是':'否'}}</td>
+                <td>{{item.isNeedFace==1?'需要':'不需要'}}</td>
+                <!-- <td>
+                  <a ng-click="addProcess(item)" class="text-href m-r">编辑</a>
                   <a ng-click="deleteBuzhou({id:item.id})" class="text-href">删除</a>
-                </td>
+                </td> -->
               </tr>
             </tbody>
-            <tbody ng-if="!processList.length">
+            <tbody ng-if="!setProcessList.length">
               <tr class="text-center">
-                <td colspan="4">暂无数据</td>
+                <td colspan="5">暂无数据</td>
               </tr>
             </tbody>
           </table>
@@ -51,12 +51,12 @@
       </div>
     </div>
   </div>
-  <footer class="footer bg-white" fix-footer-ex="" fix-con-selector=".main-content" style="left: 200px;padding:2px 240px 0 10px;">
+  <!-- <footer class="footer bg-white" fix-footer-ex="" fix-con-selector=".main-content" style="left: 200px;padding:2px 240px 0 10px;">
     <div class="row text-center-xs">
       <div class="col-md-5 hidden-sm">
         <p class="text-muted m-t">总共{{ page.totalCnt }}条 当前为第{{ page.pageIndex }}页</p>
       </div>
       <div wmo-pagination page-index="page.pageIndex" page-size="page.pageSize" total-cnt="page.totalCnt" on-page-index-changed="onPageIndexChanged()" style="margin:0;float:right;padding-top:8px;"></div>
     </div>
-  </footer>
+  </footer> -->
 </section>

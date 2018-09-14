@@ -132,75 +132,76 @@
      */
     $scope.onPageIndexChanged=function(){
       // console.log($scope.page)
-        getProcessList();
+        getSetProcessList();
     };
 
-    function getProcessList() {
+    function getSetProcessList() {
       $scope.pageLoading = true;
-      var param = {
-        PageNow: $scope.page.pageIndex,
-        PageSize: $scope.page.pageSize,
-      }
-      processServer.processList(param).then(function(res){
+      processServer.setProcessList({id:$stateParams.id}).then(function(res){
         $scope.pageLoading = false;
-        $scope.processList = res.res.data.list;
+        $scope.setProcessList = res.res.data;
         $scope.page.totalCnt = res.res.data.count;
       })
     }
-    getProcessList();
+    getSetProcessList();
 
-    $scope.addProcess = function(params) {
-      processServer.addProcessDialog(params).result.then(function(data){
+    $scope.addSetProcessDialog = function() {
+      processServer.addSetProcessDialog({id:$stateParams.id}).result.then(function(data){
         if(data){
-          getProcessList();
+          getSetProcessList();
         }
       })
     }
     
   }
 
-  function addSetProcessCtrl($scope, $state, processServer, $toaster, $modalInstance,data) {
+  function addSetProcessCtrl($scope, $state, processServer, modulemanageServer, $toaster, $modalInstance,data) {
     $scope.cancel = function() {
       $modalInstance.dismiss('Canceled');
     };
 
     $scope.entity = {};
-    console.log(data);
-    if(data&&data.id){
-      $scope.isEdit = true;
-      $scope.entity.Title = data.title;
-      $scope.entity.Icon = data.icon;
-    }
 
-    $scope.rechoiseImg = function(imgsrc){
-      $scope.entity.Icon = '';
-    }
-
-    $scope.upload = function(data){
-      console.log("done upload img",data);
-      if(data&&data.res&&data.res.data&&data.res.data.length){
-        $scope.entity.Icon = data.res.data[0].imageUrl;
-      }else {
-        $toaster.warning("上传失败！请稍后重试")
+    $scope.pageLoading = true;
+    function getProcessList() {
+      var param = {
+        PageNow: 1,
+        PageSize: 10000,
       }
-    }
-
-    function addProcessFun(){
-      processServer.addProcess($scope.entity).then(function(ret){
-        $modalInstance.close(true);
-        $toaster.success("添加成功");
-      }, function(ret) {
-        // $toaster.info(ret.msg);
-      }).finally(function() {
-        $scope.saveloading = false;
+      processServer.processList(param).then(function(res){
+        $scope.pageLoading = false;
+        $scope.processListData = res.res.data.list;
       })
     }
+    getProcessList();
 
-    function editProcessFun(){
-      $scope.entity.id = data.id;
-      processServer.editProcess($scope.entity).then(function(ret){
+    function getModuleList() {
+      var params = {
+        PageNow: 1,
+        PageSize: 10000
+      }
+      modulemanageServer.moduleList(params).then(function(res){
+        $scope.moduleListData = res.res.data.list;
+        $scope.pageLoading = false;
+      })
+    }
+    getModuleList();
+
+    function getSelectedModuleIds() {
+      var idsArr = [];
+      angular.forEach($scope.moduleListData,function(item){
+        if(item.isChecked){
+          idsArr.push(item.id);
+        }
+      })
+      var idsStr = idsArr.join(',')||'';
+      return idsStr;
+    }
+
+    function addSetProcessFun(){
+      processServer.addProcessSteps($scope.entity).then(function(ret){
         $modalInstance.close(true);
-        $toaster.success("修改成功");
+        $toaster.success("添加成功");
       }, function(ret) {
         // $toaster.info(ret.msg);
       }).finally(function() {
@@ -211,16 +212,12 @@
     $scope.eventformvalidate = {
       submitHandler: function () {
         console.log($scope.entity)
-        if(!$scope.entity.Icon){
-          $toaster.warning("请上传头像");
-          return;
-        } 
+        var selModuleIds = getSelectedModuleIds();
+        $scope.entity.ModuleCategoryId = selModuleIds;
+        $scope.entity.Id = data.id;
+        console.log('selModuleIds',selModuleIds)
         $scope.saveloading = true;
-        if(!$scope.isEdit){
-          addProcessFun();
-        }else{
-          editProcessFun();
-        }
+        addSetProcessFun();
       }
     }
   }
